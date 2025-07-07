@@ -126,15 +126,9 @@ def prepare_optimized_datasets(df, selected_features):
    y_reg = df['cantidad_a_reponer'] if 'cantidad_a_reponer' in df.columns else None
    y_reg_log = df['log_cantidad_a_reponer'] if 'log_cantidad_a_reponer' in df.columns else None
    
-   df_temp = pd.DataFrame({'fecha': df['FECHA_HORA_EJECUCION_STOCK_RECUENTOS'], 'X_index': X.index})
-   fecha_corte = df_temp['fecha'].quantile(0.8)
-   train_mask = df_temp['fecha'] <= fecha_corte
-   test_mask = df_temp['fecha'] > fecha_corte
-   
-   X_train = X.loc[df_temp[train_mask]['X_index']]
-   X_test = X.loc[df_temp[test_mask]['X_index']]
-   y_class_train = y_class.loc[df_temp[train_mask]['X_index']]
-   y_class_test = y_class.loc[df_temp[test_mask]['X_index']]
+   X_train, X_test, y_class_train, y_class_test = train_test_split(
+        X, y_class, test_size=0.2, random_state=42, stratify=y_class
+    )
    
    mask_train = y_reg[X_train.index] > 0
    mask_test = y_reg[X_test.index] > 0

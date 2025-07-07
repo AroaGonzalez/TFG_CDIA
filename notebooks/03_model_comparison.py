@@ -16,6 +16,7 @@ from sklearn.metrics import (
 )
 from src.utils.feature_utils import remove_leaky_features, verify_no_leakage
 import warnings
+warnings.filterwarnings("ignore", category=UserWarning, module="sklearn.utils.validation")
 import json
 from datetime import datetime
 warnings.filterwarnings('ignore')
@@ -138,12 +139,9 @@ def compare_classification_algorithms(X, y, df):
        return {}, {}, None
    
    # Split inicial con estratificación
-   df_temp = pd.DataFrame({'fecha': df['FECHA_HORA_EJECUCION_STOCK_RECUENTOS'], 'X_index': X.index, 'y': y})
-   fecha_corte = df_temp['fecha'].quantile(0.8)
-   train_mask = df_temp['fecha'] <= fecha_corte
-   test_mask = df_temp['fecha'] > fecha_corte
-   X_train, y_train = X.loc[df_temp[train_mask]['X_index']], y.loc[df_temp[train_mask]['X_index']]
-   X_test, y_test = X.loc[df_temp[test_mask]['X_index']], y.loc[df_temp[test_mask]['X_index']]
+   X_train, X_test, y_train, y_test = train_test_split(
+        X, y, test_size=0.2, random_state=42, stratify=y
+    )
    
    print(f"📊 Split: Train {X_train.shape[0]:,}, Test {X_test.shape[0]:,}")
    print(f"📊 Balance train: {y_train.mean():.1%}, test: {y_test.mean():.1%}")
@@ -280,17 +278,11 @@ def compare_regression_algorithms(X, y, y_log, df):
       y_reg_log = y_log
   
   # Split para regresión
-  df_temp = pd.DataFrame({'fecha': df['FECHA_HORA_EJECUCION_STOCK_RECUENTOS'], 'X_index': X_reg.index})
-  fecha_corte = df_temp['fecha'].quantile(0.8)
-  train_mask = df_temp['fecha'] <= fecha_corte
-  test_mask = df_temp['fecha'] > fecha_corte
-  
-  X_train = X_reg.loc[df_temp[train_mask]['X_index']]
-  X_test = X_reg.loc[df_temp[test_mask]['X_index']]
-  y_train = y_reg.loc[df_temp[train_mask]['X_index']]
-  y_test = y_reg.loc[df_temp[test_mask]['X_index']]
-  y_train_log = y_reg_log.loc[df_temp[train_mask]['X_index']] if y_reg_log is not None else None
-  y_test_log = y_reg_log.loc[df_temp[test_mask]['X_index']] if y_reg_log is not None else None
+  X_train, X_test, y_train, y_test = train_test_split(
+    X_reg, y_reg, test_size=0.2, random_state=42
+    )
+  y_train_log = y_reg_log.loc[X_train.index] if y_reg_log is not None else None
+  y_test_log = y_reg_log.loc[X_test.index] if y_reg_log is not None else None
   
   # Escalar
   scaler = RobustScaler()

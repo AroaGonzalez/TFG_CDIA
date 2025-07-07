@@ -33,8 +33,8 @@ def parse_sql_inserts_to_dataframe(sql_file_path: str) -> pd.DataFrame:
     # Definir columnas según estructura RAM
     columns = [
         'ID_ALIAS', 'ID_LOCALIZACION_COMPRA', 'ID_AJENO',
-        'STOCK_MINIMO', 'STOCK_MAXIMO_LEGACY', 'STOCK_RECUENTOS', 
-        'STOCK_TEORICO_LEGACY',
+        'STOCK_MINIMO', 'STOCK_MAXIMO', 'STOCK_RECUENTOS', 
+        'STOCK_TEORICO',
         'FECHA_HORA_EJECUCION_STOCK_RECUENTOS',
         'FECHA_HORA_EJECUCION_STOCK_TEORICO',
         'FECHA_ALTA', 'USUARIO_ALTA', 'FECHA_MODIFICACION',
@@ -75,10 +75,16 @@ def parse_sql_inserts_to_dataframe(sql_file_path: str) -> pd.DataFrame:
         'ID_ALIAS', 'ID_LOCALIZACION_COMPRA', 'ID_AJENO',
         'STOCK_RECUENTOS', 'CAPACIDAD_MAXIMA', 'STOCK_MINIMO'
     ]
+
+    date_columns = [col for col in df.columns if 'FECHA' in col]
     
     for col in numeric_columns:
         if col in df.columns:
             df[col] = pd.to_numeric(df[col], errors='coerce')
+
+    for col in date_columns:
+        if col in df.columns:
+            df[col] = pd.to_datetime(df[col], errors='coerce')
     
     print(f"✅ DataFrame creado: {df.shape[0]} filas x {df.shape[1]} columnas")
     return df
