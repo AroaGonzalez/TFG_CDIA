@@ -1,0 +1,17 @@
+{
+  "selected_features": [
+    "alias_coef_variacion",
+    "alias_pct_temporada_alta",
+    "antiguedad_normalizada",
+    "dia_del_a\u00f1o",
+    "alias_frecuencia",
+    "loc_diversidad_alias",
+    "alias_pct_fin_semana",
+    "dia_semana_sen",
+    "dia_semana_cos",
+    "semana_del_a\u00f1o"
+  ],
+  "feature_count": 10,
+  "optimization_threshold": 0.8,
+  "created_at": "2025-07-07 17:53:51"
+}
