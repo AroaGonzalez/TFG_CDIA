@@ -15,6 +15,14 @@ import warnings
 import json
 warnings.filterwarnings('ignore')
 
+output_dir = 'results/02_feature_engineering'
+plots_dir = f'{output_dir}/plots'
+data_dir = 'data/processed/02_features'
+
+os.makedirs(output_dir, exist_ok=True)
+os.makedirs(plots_dir, exist_ok=True)
+os.makedirs(data_dir, exist_ok=True)
+
 # Configuración de visualización
 plt.style.use('ggplot')
 sns.set_palette("viridis")
@@ -62,9 +70,9 @@ def create_temporal_features(df):
                             (df['FECHA_HORA_EJECUCION_STOCK_RECUENTOS'].dt.month <= 1)).astype(int)
    
    # Indicadores de actualidad de datos
-   df['dato_muy_reciente'] = (df['dias_desde_recuento'] <= 3).astype(int)
-   df['dato_reciente'] = (df['dias_desde_recuento'] <= 7).astype(int)
-   df['dato_medio'] = ((df['dias_desde_recuento'] > 7) & (df['dias_desde_recuento'] <= 30)).astype(int)
+   df['dato_muy_reciente'] = (df['dias_desde_recuento'] <= 5).astype(int)
+   df['dato_reciente'] = (df['dias_desde_recuento'] <= 13).astype(int)
+   df['dato_medio'] = ((df['dias_desde_recuento'] > 13) & (df['dias_desde_recuento'] <= 30)).astype(int)
    df['dato_antiguo'] = (df['dias_desde_recuento'] > 30).astype(int)
    
    # Características de tiempo normalizado
@@ -467,7 +475,7 @@ def analyze_feature_importance(df, features, targets):
    print("-" * 30)
    
    # Crear carpeta para gráficos
-   os.makedirs('results/plots', exist_ok=True)
+   os.makedirs('plots_dir', exist_ok=True)
    
    # Características numéricas
    numeric_features = [f for f in features if f in df.columns and pd.api.types.is_numeric_dtype(df[f])]
@@ -495,7 +503,7 @@ def analyze_feature_importance(df, features, targets):
        plt.title(f'Top 20 Características por Correlación con {target}')
        plt.xlabel('Correlación Absoluta')
        plt.tight_layout()
-       plt.savefig(f'results/plots/correlacion_{target}.png', dpi=300)
+       plt.savefig(f'{plots_dir}/correlacion_{target}.png', dpi=300)
    
    # Matriz de correlación entre features
    plt.figure(figsize=(16, 14))
@@ -507,7 +515,7 @@ def analyze_feature_importance(df, features, targets):
                linewidths=.5, center=0, square=True)
    plt.title('Matriz de Correlación entre Características')
    plt.tight_layout()
-   plt.savefig('results/plots/matriz_correlacion.png', dpi=300)
+   plt.savefig(f'{plots_dir}/matriz_correlacion.png', dpi=300)
    
    print(f"\n✅ Análisis de importancia guardado en results/plots/")
    
@@ -543,7 +551,7 @@ def main():
    
    # Guardar dataset final
    os.makedirs('data/processed', exist_ok=True)
-   df_final.to_csv('data/processed/features_engineered.csv', index=False)
+   df_final.to_csv(f'{data_dir}/features_engineered.csv', index=False)
    
    # Guardar metadata
    metadata = {
@@ -556,14 +564,15 @@ def main():
        'created_at': datetime.now().strftime('%Y-%m-%d %H:%M:%S')
    }
    
-   with open('data/processed/feature_metadata.json', 'w') as f:
+   with open(f'{output_dir}/feature_metadata.json', 'w') as f:
        json.dump(metadata, f, indent=2)
    
    print(f"\n✅ Feature engineering completado")
    print(f"   • Dataset final: {df_final.shape[0]} filas × {df_final.shape[1]} columnas")
    print(f"   • Archivos guardados:")
-   print(f"     - data/processed/features_engineered.csv")
-   print(f"     - data/processed/feature_metadata.json")
+   print(f"     - {data_dir}/features_engineered.csv")
+   print(f"     - {output_dir}/feature_metadata.json")
+   print(f"     - {plots_dir}/ (múltiples gráficos)")
    
    return df_final, features_final
 

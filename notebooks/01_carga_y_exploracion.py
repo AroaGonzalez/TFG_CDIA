@@ -13,6 +13,10 @@ from src.data_loader import parse_sql_inserts_to_dataframe
 import warnings
 warnings.filterwarnings('ignore')
 
+output_dir = 'results/01_exploracion'
+plots_dir = f'{output_dir}/plots'
+data_dir = 'data/processed'
+
 # Configuración de visualización
 plt.style.use('ggplot')
 sns.set_palette("viridis")
@@ -94,7 +98,9 @@ def main():
    print(df_clean[['STOCK_RECUENTOS', 'CAPACIDAD_MAXIMA']].describe().round(2))
    
    # Crear directorio para guardar gráficos
-   os.makedirs('results/plots', exist_ok=True)
+   os.makedirs(output_dir, exist_ok=True)
+   os.makedirs(plots_dir, exist_ok=True)
+   os.makedirs(data_dir, exist_ok=True)
    
    # Análisis de distribución
    plt.figure(figsize=(18, 6))
@@ -120,7 +126,7 @@ def main():
    plt.ylabel('Frecuencia')
    
    plt.tight_layout()
-   plt.savefig('results/plots/distribucion_variables.png', dpi=300)
+   plt.savefig(f'{plots_dir}/distribucion_variables.png', dpi=300)
    
    # Análisis por alias
    plt.figure(figsize=(12, 6))
@@ -131,7 +137,7 @@ def main():
    plt.ylabel('Número de Localizaciones')
    plt.xticks(rotation=45)
    plt.tight_layout()
-   plt.savefig('results/plots/top_aliases.png', dpi=300)
+   plt.savefig(f'{plots_dir}/top_aliases.png', dpi=300)
    
    # Análisis temporal
    plt.figure(figsize=(12, 6))
@@ -147,7 +153,7 @@ def main():
    monthly_stats.plot(figsize=(12, 6))
    plt.title('Evolución temporal de stock y capacidad')
    plt.ylabel('Valor promedio')
-   plt.savefig('results/plots/evolucion_temporal.png', dpi=300)
+   plt.savefig(f'{plots_dir}/evolucion_temporal.png', dpi=300)
    
    # PASO 4: Análisis de correlaciones básicas
    print("\n📈 PASO 4: ANÁLISIS DE CORRELACIONES")
@@ -165,7 +171,7 @@ def main():
    sns.heatmap(corr_matrix, annot=True, cmap='coolwarm', vmin=-1, vmax=1, center=0)
    plt.title('Matriz de Correlación entre Variables Principales')
    plt.tight_layout()
-   plt.savefig('results/plots/correlacion_basica.png', dpi=300)
+   plt.savefig(f'{plots_dir}/correlacion_basica.png', dpi=300)
    
    # PASO 5: Definición de targets para ML
    print("\n🎯 PASO 5: DEFINICIÓN DE TARGETS PARA ML")
@@ -206,7 +212,7 @@ def main():
    plt.ylabel('Frecuencia')
    
    plt.tight_layout()
-   plt.savefig('results/plots/distribucion_targets.png', dpi=300)
+   plt.savefig(f'{plots_dir}/distribucion_targets.png', dpi=300)
    
    # PASO 6: Guardar dataset procesado
    print("\n💾 PASO 6: GUARDAR DATASET PROCESADO")
@@ -244,7 +250,7 @@ def main():
    print(f"📊 Archivos guardados:")
    print(f"  • data/processed/stock_data_clean.csv")
    print(f"  • data/processed/metadata.json")
-   print(f"  • results/plots/ (múltiples gráficos)")
+   print(f"  • {plots_dir}/ (múltiples gráficos)")
    
    return df_final
 

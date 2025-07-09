@@ -16,11 +16,14 @@ from sklearn.metrics import (
 )
 from src.utils.feature_utils import remove_leaky_features, verify_no_leakage
 import warnings
-warnings.filterwarnings("ignore", category=UserWarning, module="sklearn.utils.validation")
 import json
 from datetime import datetime
+from lightgbm.sklearn import LGBMRegressor
 warnings.filterwarnings('ignore')
-
+warnings.filterwarnings("ignore", category=UserWarning, module="sklearn.utils.validation")
+import logging
+logging.getLogger('lightgbm').setLevel(logging.ERROR)
+warnings.filterwarnings("ignore", category=UserWarning)
 # Algoritmos de clasificación
 from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier
@@ -36,15 +39,23 @@ from sklearn.ensemble import RandomForestRegressor, GradientBoostingRegressor
 from sklearn.svm import SVR
 from sklearn.neighbors import KNeighborsRegressor
 
+output_dir = 'results/03_model_comparison'
+plots_dir = f'{output_dir}/plots'
+models_dir = 'models'
+
+os.makedirs(output_dir, exist_ok=True)
+os.makedirs(plots_dir, exist_ok=True)
+os.makedirs(models_dir, exist_ok=True)
+
 def load_engineered_data():
    """Cargar datos con feature engineering"""
    try:
-       df = pd.read_csv('data/processed/features_engineered.csv')
+       df = pd.read_csv('data/processed/02_features/features_engineered.csv')
        print(f"✅ Datos cargados: {df.shape}")
        
        # Cargar metadata si existe
        try:
-           with open('data/processed/feature_metadata.json', 'r') as f:
+           with open('results/02_feature_engineering/feature_metadata.json', 'r') as f:
                metadata = json.load(f)
                features = metadata.get('features', [])
        except (FileNotFoundError, json.JSONDecodeError):
@@ -397,8 +408,6 @@ def create_results_visualizations(class_results, reg_results):
    print("\n📊 CREANDO VISUALIZACIONES")
    print("-" * 30)
    
-   os.makedirs('results/plots', exist_ok=True)
-   
    # Visualizaciones de clasificación
    if class_results:
        plt.figure(figsize=(12, 8))
@@ -420,7 +429,7 @@ def create_results_visualizations(class_results, reg_results):
        plt.grid(axis='y', alpha=0.3)
        plt.legend(loc='lower right')
        plt.tight_layout()
-       plt.savefig('results/plots/classification_metrics.png', dpi=300)
+       plt.savefig(f'{plots_dir}/classification_metrics.png', dpi=300)
    
    # Visualizaciones de regresión
    if reg_results:
@@ -449,7 +458,7 @@ def create_results_visualizations(class_results, reg_results):
            plt.ylabel('R² Score')
            plt.grid(axis='y', alpha=0.3)
            plt.tight_layout()
-           plt.savefig(f'results/plots/regression_r2_{title_suffix.replace(" ", "_").lower()}.png', 
+           plt.savefig(f'{plots_dir}/regression_r2_{title_suffix.replace(" ", "_").lower()}.png', 
                       dpi=300)
            
            # Gráfico para MAE
@@ -466,7 +475,7 @@ def create_results_visualizations(class_results, reg_results):
            plt.ylabel('Error Absoluto Medio')
            plt.grid(axis='y', alpha=0.3)
            plt.tight_layout()
-           plt.savefig(f'results/plots/regression_mae_{title_suffix.replace(" ", "_").lower()}.png', 
+           plt.savefig(f'{plots_dir}/regression_mae_{title_suffix.replace(" ", "_").lower()}.png', 
                       dpi=300)
    
    print("✅ Visualizaciones guardadas en 'results/plots/'")
@@ -476,18 +485,16 @@ def save_results(class_results, reg_results):
    print("\n💾 GUARDANDO RESULTADOS")
    print("-" * 30)
    
-   os.makedirs('results', exist_ok=True)
-   
    # Guardar resultados de clasificación
    if class_results:
        class_df = pd.DataFrame(class_results).T
-       class_df.to_csv('results/classification_results.csv')
+       class_df.to_csv(f'{output_dir}/classification_results.csv')
        print(f"✅ Clasificación guardada: results/classification_results.csv")
    
    # Guardar resultados de regresión
    if reg_results:
        reg_df = pd.DataFrame(reg_results).T
-       reg_df.to_csv('results/regression_results.csv')
+       reg_df.to_csv(f'{output_dir}/regression_results.csv')
        print(f"✅ Regresión guardada: results/regression_results.csv")
 
 def save_importance_analysis(predictions, features_used):
@@ -506,8 +513,6 @@ def save_importance_analysis(predictions, features_used):
    if not available_models:
        print("⚠️ No se encontraron modelos basados en árboles")
        return
-   
-   os.makedirs('results/plots', exist_ok=True)
    
    # Analizar importancia para cada modelo
    importances_data = {}
@@ -538,11 +543,11 @@ def save_importance_analysis(predictions, features_used):
        plt.title(f'Top 20 Características Importantes - {model_name}')
        plt.xlabel('Importancia')
        plt.tight_layout()
-       plt.savefig(f'results/plots/importance_{model_name.replace(" ", "_").replace("(", "").replace(")", "")}.png', 
+       plt.savefig(f'{plots_dir}/importance_{model_name.replace(" ", "_").replace("(", "").replace(")", "")}.png', 
                   dpi=300)
        
        # Guardar en CSV
-       importance_df.to_csv(f'results/importance_{model_name.replace(" ", "_").replace("(", "").replace(")", "")}.csv', 
+       importance_df.to_csv(f'{output_dir}/importance_{model_name.replace(" ", "_").replace("(", "").replace(")", "")}.csv', 
                            index=False)
        
        print(f"✅ Análisis de importancia para {model_name} guardado")
@@ -585,7 +590,7 @@ def save_importance_analysis(predictions, features_used):
        plt.xlabel('Importancia')
        plt.legend(title='Modelo', bbox_to_anchor=(1.05, 1), loc='upper left')
        plt.tight_layout()
-       plt.savefig('results/plots/importance_comparison.png', dpi=300)
+       plt.savefig(f'{plots_dir}/importance_comparison.png', dpi=300)
        
        print(f"✅ Comparación de importancia entre modelos guardada")
 
@@ -651,8 +656,6 @@ def save_best_models(class_predictions, reg_predictions):
    print("\n💾 GUARDANDO MEJORES MODELOS")
    print("-" * 30)
    
-   os.makedirs('models', exist_ok=True)
-   
    # Mejor modelo de clasificación
    if class_predictions:
        try:
@@ -687,7 +690,7 @@ def save_best_models(class_predictions, reg_predictions):
            
            if best_model_name:
                best_model = class_predictions[best_model_name]['model']
-               dump(best_model, 'models/best_classification_model.joblib')
+               dump(best_model, f'{models_dir}/best_classification_model.joblib')
                
                # Guardar metadata
                model_meta = {
@@ -696,7 +699,7 @@ def save_best_models(class_predictions, reg_predictions):
                    'created_at': datetime.now().strftime('%Y-%m-%d %H:%M:%S')
                }
                
-               with open('models/classification_model_meta.json', 'w') as f:
+               with open(f'{models_dir}/classification_model_meta.json', 'w') as f:
                    json.dump(model_meta, f, indent=2)
                
                print(f"✅ Mejor modelo de clasificación guardado: {best_model_name}")
@@ -738,7 +741,7 @@ def save_best_models(class_predictions, reg_predictions):
            
            if best_model_name:
                best_model = reg_predictions[best_model_name]['model']
-               dump(best_model, 'models/best_regression_model.joblib')
+               dump(best_model, f'{models_dir}/best_regression_model.joblib')
                
                # Guardar metadata
                model_meta = {
@@ -747,7 +750,7 @@ def save_best_models(class_predictions, reg_predictions):
                    'created_at': datetime.now().strftime('%Y-%m-%d %H:%M:%S')
                }
                
-               with open('models/regression_model_meta.json', 'w') as f:
+               with open(f'{models_dir}/regression_model_meta.json', 'w') as f:
                    json.dump(model_meta, f, indent=2)
                
                print(f"✅ Mejor modelo de regresión guardado: {best_model_name}")
