@@ -1,0 +1,18 @@
+{
+  "ejemplo1": {
+    "id_alias": 216,
+    "id_localizacion": 2260,
+    "prediccion": {
+      "necesita_reposicion": false,
+      "cantidad_a_reponer": 0.0
+    }
+  },
+  "ejemplo2": {
+    "id_alias": 246,
+    "id_localizacion": 5227,
+    "prediccion": {
+      "necesita_reposicion": true,
+      "cantidad_a_reponer": 93.91849517822266
+    }
+  }
+}

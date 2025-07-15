@@ -1,0 +1,9 @@
+{
+  "version": "1.0.0",
+  "created_at": "2025-07-14 17:56:13",
+  "threshold": 0.48,
+  "model_type": {
+    "classifier": "VotingClassifier",
+    "regressor": "XGBRegressor"
+  }
+}
