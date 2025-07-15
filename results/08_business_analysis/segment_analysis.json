@@ -1,0 +1,90 @@
+{
+  "top_alias": [
+    {
+      "ID_ALIAS": 131,
+      "Exactitud": 1.0
+    },
+    {
+      "ID_ALIAS": 151,
+      "Exactitud": 1.0
+    },
+    {
+      "ID_ALIAS": 153,
+      "Exactitud": 1.0
+    },
+    {
+      "ID_ALIAS": 156,
+      "Exactitud": 1.0
+    },
+    {
+      "ID_ALIAS": 158,
+      "Exactitud": 1.0
+    }
+  ],
+  "bottom_alias": [
+    {
+      "ID_ALIAS": 149,
+      "Exactitud": 0.0
+    },
+    {
+      "ID_ALIAS": 127,
+      "Exactitud": 0.3333333333333333
+    },
+    {
+      "ID_ALIAS": 182,
+      "Exactitud": 0.3333333333333333
+    },
+    {
+      "ID_ALIAS": 203,
+      "Exactitud": 0.3333333333333333
+    },
+    {
+      "ID_ALIAS": 219,
+      "Exactitud": 0.3333333333333333
+    }
+  ],
+  "top_locations": [
+    {
+      "ID_LOCALIZACION": 2,
+      "Exactitud": 1.0
+    },
+    {
+      "ID_LOCALIZACION": 23,
+      "Exactitud": 1.0
+    },
+    {
+      "ID_LOCALIZACION": 31,
+      "Exactitud": 1.0
+    },
+    {
+      "ID_LOCALIZACION": 55,
+      "Exactitud": 1.0
+    },
+    {
+      "ID_LOCALIZACION": 57,
+      "Exactitud": 1.0
+    }
+  ],
+  "bottom_locations": [
+    {
+      "ID_LOCALIZACION": 45,
+      "Exactitud": 0.0
+    },
+    {
+      "ID_LOCALIZACION": 65,
+      "Exactitud": 0.0
+    },
+    {
+      "ID_LOCALIZACION": 74,
+      "Exactitud": 0.0
+    },
+    {
+      "ID_LOCALIZACION": 80,
+      "Exactitud": 0.0
+    },
+    {
+      "ID_LOCALIZACION": 109,
+      "Exactitud": 0.0
+    }
+  ]
+}

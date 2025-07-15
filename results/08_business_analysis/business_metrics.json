@@ -1,0 +1,14 @@
+{
+  "accuracy": 0.6962899050905953,
+  "mae_true_positives": 626.4998535009531,
+  "stock_shortage_rate": 0.08455565142364108,
+  "excess_stock_rate": 0.2191544434857636,
+  "estimated_stock_savings": 95342.7576637268,
+  "financial_impact": {
+    "savings": 953427.5766372681,
+    "loss_from_shortages": 1960.0,
+    "net_balance": 951467.5766372681
+  },
+  "customer_service_rate": 0.9154443485763589,
+  "inventory_turnover_efficiency": 4.527745784809411
+}

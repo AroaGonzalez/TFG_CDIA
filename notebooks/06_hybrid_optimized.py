@@ -397,7 +397,8 @@ def implement_hybrid_model(data, class_model, class_threshold, reg_model):
             'accuracy': float(accuracy),
             'precision': float(precision),
             'recall': float(recall),
-            'f1': float(f1)
+            'f1': float(f1),
+            'threshold': float(class_threshold) 
         },
         'regression': {
             'mae': float(mae_hybrid),
