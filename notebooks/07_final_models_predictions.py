@@ -26,11 +26,12 @@ os.makedirs(predictor_dir, exist_ok=True)
 
 # Define la clase HybridPredictor fuera de cualquier función
 class HybridPredictor:
-    def __init__(self, classifier, regressor, threshold, scaler):
+    def __init__(self, classifier, regressor, threshold, scaler, segment_models=None):
         self.classifier = classifier
         self.regressor = regressor
         self.threshold = threshold
         self.scaler = scaler
+        self.segment_models = segment_models or {}
         self.version = "1.0.0"
         self.created_at = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     
@@ -70,22 +71,33 @@ class HybridPredictor:
             
             # Inicializar array para cantidades a reponer
             reposition_amount = np.zeros(len(data_scaled))
-            
-            # Regresión: ¿Cuánto reponer? (solo para los que necesitan)
+
             if needs_reposition.sum() > 0:
-                # Indices donde se necesita reposición
                 reposition_indices = np.where(needs_reposition == 1)[0]
                 
-                # Predecir cantidades solo para esos índices
-                data_reposition = data_scaled[reposition_indices]
-                amount_log = self.regressor.predict(data_reposition)
-                
-                # Convertir de escala logarítmica a original
-                amount = np.expm1(amount_log)
-                
-                # Asignar cantidades a los índices correspondientes
+                # Regresión: ¿Cuánto reponer? (solo para los que necesitan)
                 for i, idx in enumerate(reposition_indices):
-                    reposition_amount[idx] = amount[i]
+                    # Intentar usar modelo específico si hay datos de segmento
+                    segment_model = None
+                    if isinstance(data, pd.DataFrame) and 'ID_ALIAS' in data.columns:
+                        alias_id = data.iloc[idx]['ID_ALIAS']
+                        model_key = f"alias_{alias_id}"
+                        segment_model = self.segment_models.get(model_key)
+                    
+                    if segment_model is None and isinstance(data, pd.DataFrame) and 'ID_LOCALIZACION_COMPRA' in data.columns:
+                        loc_id = data.iloc[idx]['ID_LOCALIZACION_COMPRA']
+                        model_key = f"loc_{loc_id}"
+                        segment_model = self.segment_models.get(model_key)
+                    
+                    # Usar modelo específico o general
+                    if segment_model is not None:
+                        amount_log = segment_model.predict(data_scaled[idx].reshape(1, -1))
+                    else:
+                        amount_log = self.regressor.predict(data_scaled[idx].reshape(1, -1))
+                    
+                    # Aplicar factor de calibración
+                    amount = np.expm1(amount_log) * 4.5
+                    reposition_amount[idx] = amount[0] if hasattr(amount, '__len__') else amount
             
             # Preparar resultados
             results = {
@@ -164,8 +176,20 @@ def load_models():
         print(f"❌ ERROR CRÍTICO al cargar el scaler: {str(e)}")
         return None, None, None, None
     
+    segment_models = {}
+    segments_dir = 'models/segments'
+    if os.path.exists(segments_dir):
+        for file in os.listdir(segments_dir):
+            if file.endswith('.joblib') and file.startswith('regression_model_Q'):
+                segment_name = file.replace('.joblib', '')
+                try:
+                    segment_models[segment_name] = load(f'{segments_dir}/{file}')
+                    print(f"✅ Modelo de segmento cargado: {segment_name}")
+                except Exception as e:
+                    print(f"⚠️ Error al cargar modelo de segmento {segment_name}: {e}")
+    
     # Obtener umbral de configuración
-    threshold = 0.48  # Valor por defecto
+    threshold = 0.3  # Valor por defecto
     try:
         with open('models/final/hybrid_model_results.json', 'r') as f:
             results = json.load(f)
@@ -184,7 +208,7 @@ def load_models():
         return None, None, None, None
     
     print("✅ Todos los modelos cargados correctamente")
-    return classifier, regressor, threshold, scaler
+    return classifier, regressor, threshold, scaler, segment_models
 
 def demo_predictor(predictor):
     """Demostrar el uso del predictor híbrido con ejemplos reales"""
@@ -250,7 +274,7 @@ def main():
     print("="*60)
     
     # Cargar modelos y configuración existentes
-    classifier, regressor, threshold, scaler = load_models()
+    classifier, regressor, threshold, scaler, segment_models  = load_models()
     
     if classifier is None or regressor is None or scaler is None:
         print("❌ ERROR CRÍTICO: No se pudieron cargar todos los componentes necesarios")
@@ -258,7 +282,7 @@ def main():
         return None, {}
     
     # Crear predictor híbrido
-    predictor = HybridPredictor(classifier, regressor, threshold, scaler)
+    predictor = HybridPredictor(classifier, regressor, threshold, scaler, segment_models)
     print("✅ Predictor híbrido creado correctamente")
     
     # Guardar el predictor

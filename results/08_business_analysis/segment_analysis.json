@@ -1,23 +1,23 @@
 {
   "top_alias": [
     {
-      "ID_ALIAS": 131,
-      "Exactitud": 1.0
-    },
-    {
-      "ID_ALIAS": 151,
-      "Exactitud": 1.0
-    },
-    {
       "ID_ALIAS": 153,
       "Exactitud": 1.0
     },
     {
-      "ID_ALIAS": 156,
+      "ID_ALIAS": 163,
       "Exactitud": 1.0
     },
     {
-      "ID_ALIAS": 158,
+      "ID_ALIAS": 166,
+      "Exactitud": 1.0
+    },
+    {
+      "ID_ALIAS": 176,
+      "Exactitud": 1.0
+    },
+    {
+      "ID_ALIAS": 180,
       "Exactitud": 1.0
     }
   ],
@@ -27,20 +27,20 @@
       "Exactitud": 0.0
     },
     {
-      "ID_ALIAS": 127,
-      "Exactitud": 0.3333333333333333
+      "ID_ALIAS": 151,
+      "Exactitud": 0.0
     },
     {
-      "ID_ALIAS": 182,
-      "Exactitud": 0.3333333333333333
+      "ID_ALIAS": 156,
+      "Exactitud": 0.0
     },
     {
-      "ID_ALIAS": 203,
-      "Exactitud": 0.3333333333333333
+      "ID_ALIAS": 158,
+      "Exactitud": 0.0
     },
     {
-      "ID_ALIAS": 219,
-      "Exactitud": 0.3333333333333333
+      "ID_ALIAS": 162,
+      "Exactitud": 0.0
     }
   ],
   "top_locations": [
@@ -57,17 +57,25 @@
       "Exactitud": 1.0
     },
     {
-      "ID_LOCALIZACION": 55,
+      "ID_LOCALIZACION": 57,
       "Exactitud": 1.0
     },
     {
-      "ID_LOCALIZACION": 57,
+      "ID_LOCALIZACION": 61,
       "Exactitud": 1.0
     }
   ],
   "bottom_locations": [
     {
+      "ID_LOCALIZACION": 19,
+      "Exactitud": 0.0
+    },
+    {
       "ID_LOCALIZACION": 45,
+      "Exactitud": 0.0
+    },
+    {
+      "ID_LOCALIZACION": 55,
       "Exactitud": 0.0
     },
     {
@@ -76,14 +84,6 @@
     },
     {
       "ID_LOCALIZACION": 74,
-      "Exactitud": 0.0
-    },
-    {
-      "ID_LOCALIZACION": 80,
-      "Exactitud": 0.0
-    },
-    {
-      "ID_LOCALIZACION": 109,
       "Exactitud": 0.0
     }
   ]
