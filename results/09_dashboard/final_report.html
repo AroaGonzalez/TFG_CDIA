@@ -1,0 +1,127 @@
+
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>Informe Final: Predicción de Stock Teórico</title>
+        <style>
+            body { font-family: Arial, sans-serif; margin: 20px; }
+            h1, h2, h3 { color: #2c3e50; }
+            .section { margin-bottom: 30px; padding: 20px; border-radius: 5px; background-color: #f8f9fa; }
+            .metric { display: inline-block; width: 23%; text-align: center; margin: 10px 0; }
+            .metric-value { font-size: 24px; font-weight: bold; color: #3498db; }
+            .metric-name { font-size: 14px; color: #7f8c8d; }
+            table { width: 100%; border-collapse: collapse; }
+            th, td { padding: 8px; text-align: left; border-bottom: 1px solid #ddd; }
+            th { background-color: #3498db; color: white; }
+            tr:hover { background-color: #f5f5f5; }
+            .chart { margin: 20px 0; }
+            footer { margin-top: 50px; text-align: center; font-size: 12px; color: #7f8c8d; }
+        </style>
+    </head>
+    <body>
+        <h1>Informe Final: Sistema de Predicción de Stock Teórico</h1>
+        <p>Fecha de generación: 15/07/2025 11:46:23</p>
+        
+        <div class="section">
+            <h2>Resumen Ejecutivo</h2>
+            <p>Este informe presenta los resultados del sistema de predicción de stock teórico desarrollado como proyecto fin de grado.</p>
+            <div class="metrics-container">
+                <div class="metric">
+                    <div class="metric-value">41.4%</div>
+                    <div class="metric-name">Exactitud</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">99.1%</div>
+                    <div class="metric-name">Tasa de Servicio</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">43.7%</div>
+                    <div class="metric-name">Eficiencia Rotación</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">12,592,217</div>
+                    <div class="metric-name">Impacto Financiero</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>Análisis de Modelos</h2>
+            <p>Comparación de diferentes enfoques de modelado:</p>
+            <img class="chart" src="plots/model_comparison.png" alt="Comparación de modelos" width="100%">
+            
+            <h3>Modelos de Clasificación</h3>
+            <table>
+                <tr>
+                    <th>Modelo</th>
+                    <th>Accuracy</th>
+                    <th>F1-Score</th>
+                </tr>
+                <!-- Insertar filas dinámicamente con datos de modelos -->
+            </table>
+            
+            <h3>Modelos de Regresión</h3>
+            <table>
+                <tr>
+                    <th>Modelo</th>
+                    <th>MAE</th>
+                    <th>R²</th>
+                </tr>
+                <!-- Insertar filas dinámicamente con datos de modelos -->
+            </table>
+        </div>
+        
+        <div class="section">
+            <h2>Análisis de Negocio</h2>
+            <p>Impacto del sistema en métricas de negocio clave:</p>
+            <img class="chart" src="plots/business_metrics.png" alt="Métricas de negocio" width="100%">
+            
+            <h3>Análisis de Umbrales</h3>
+            <p>El análisis de umbrales de decisión muestra que 0.3 es el valor óptimo:</p>
+            <img class="chart" src="plots/threshold_impact.png" alt="Impacto por umbral" width="100%">
+        </div>
+        
+        <div class="section">
+            <h2>Análisis por Segmentos</h2>
+            <h3>Top 5 Alias</h3>
+            <table>
+                <tr>
+                    <th>ID Alias</th>
+                    <th>Exactitud</th>
+                </tr>
+                <!-- Insertar filas dinámicamente con datos de segmentos -->
+            </table>
+            
+            <h3>Top 5 Tiendas</h3>
+            <table>
+                <tr>
+                    <th>ID Localización</th>
+                    <th>Exactitud</th>
+                </tr>
+                <!-- Insertar filas dinámicamente con datos de segmentos -->
+            </table>
+        </div>
+        
+        <div class="section">
+            <h2>Conclusiones y Recomendaciones</h2>
+            <p>El sistema de predicción de stock teórico implementado ha demostrado ser efectivo para optimizar la gestión de inventario:</p>
+            <ul>
+                <li>Tasa de servicio del 99.1% que minimiza roturas de stock</li>
+                <li>Impacto financiero positivo de 12,592,217 unidades monetarias</li>
+                <li>Enfoque híbrido que combina modelos de clasificación y regresión</li>
+            </ul>
+            
+            <h3>Recomendaciones</h3>
+            <ul>
+                <li>Mantener el umbral de decisión en 0.3 para maximizar el impacto financiero</li>
+                <li>Implementar el factor de calibración de 4.5 para el modelo de regresión</li>
+                <li>Entrenar modelos específicos para los segmentos con peor rendimiento</li>
+            </ul>
+        </div>
+        
+        <footer>
+            <p>Proyecto Fin de Grado en Ciencia de Datos e Inteligencia Artificial</p>
+        </footer>
+    </body>
+    </html>
+    

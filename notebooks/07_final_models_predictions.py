@@ -14,6 +14,8 @@ from joblib import dump, load
 import warnings
 warnings.filterwarnings('ignore')
 
+from predictor_model import HybridPredictor
+
 # Configuración
 output_dir = 'results/07_final_models'
 plots_dir = f'{output_dir}/plots'
@@ -23,114 +25,6 @@ predictor_dir = 'models/predictor'
 os.makedirs(output_dir, exist_ok=True)
 os.makedirs(plots_dir, exist_ok=True)
 os.makedirs(predictor_dir, exist_ok=True)
-
-# Define la clase HybridPredictor fuera de cualquier función
-class HybridPredictor:
-    def __init__(self, classifier, regressor, threshold, scaler, segment_models=None):
-        self.classifier = classifier
-        self.regressor = regressor
-        self.threshold = threshold
-        self.scaler = scaler
-        self.segment_models = segment_models or {}
-        self.version = "1.0.0"
-        self.created_at = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-    
-    def preprocess(self, data):
-        """Preprocesar datos de entrada"""
-        # Convertir a DataFrame si es un diccionario
-        if isinstance(data, dict):
-            data = pd.DataFrame([data])
-        
-        # Aplicar escalado
-        if self.scaler is not None:
-            try:
-                data_scaled = self.scaler.transform(data)
-                # Manejar posibles NaN
-                if np.isnan(data_scaled).any():
-                    data_scaled = np.nan_to_num(data_scaled, nan=0.0)
-                return data_scaled
-            except Exception as e:
-                print(f"⚠️ Error al escalar datos: {str(e)}")
-                return data
-        return data
-    
-    def predict(self, data):
-        """Realizar predicción híbrida"""
-        # Preprocesar datos
-        try:
-            data_scaled = self.preprocess(data)
-            
-            # Clasificación: ¿Necesita reposición?
-            if hasattr(self.classifier, 'predict_proba'):
-                # Si tiene predict_proba, usarlo con umbral
-                class_proba = self.classifier.predict_proba(data_scaled)[:, 1]
-                needs_reposition = (class_proba >= self.threshold).astype(int)
-            else:
-                # Si no, usar predict directamente
-                needs_reposition = self.classifier.predict(data_scaled)
-            
-            # Inicializar array para cantidades a reponer
-            reposition_amount = np.zeros(len(data_scaled))
-
-            if needs_reposition.sum() > 0:
-                reposition_indices = np.where(needs_reposition == 1)[0]
-                
-                # Regresión: ¿Cuánto reponer? (solo para los que necesitan)
-                for i, idx in enumerate(reposition_indices):
-                    # Intentar usar modelo específico si hay datos de segmento
-                    segment_model = None
-                    if isinstance(data, pd.DataFrame) and 'ID_ALIAS' in data.columns:
-                        alias_id = data.iloc[idx]['ID_ALIAS']
-                        model_key = f"alias_{alias_id}"
-                        segment_model = self.segment_models.get(model_key)
-                    
-                    if segment_model is None and isinstance(data, pd.DataFrame) and 'ID_LOCALIZACION_COMPRA' in data.columns:
-                        loc_id = data.iloc[idx]['ID_LOCALIZACION_COMPRA']
-                        model_key = f"loc_{loc_id}"
-                        segment_model = self.segment_models.get(model_key)
-                    
-                    # Usar modelo específico o general
-                    if segment_model is not None:
-                        amount_log = segment_model.predict(data_scaled[idx].reshape(1, -1))
-                    else:
-                        amount_log = self.regressor.predict(data_scaled[idx].reshape(1, -1))
-                    
-                    # Aplicar factor de calibración
-                    amount = np.expm1(amount_log) * 4.5
-                    reposition_amount[idx] = amount[0] if hasattr(amount, '__len__') else amount
-            
-            # Preparar resultados
-            results = {
-                'necesita_reposicion': needs_reposition,
-                'cantidad_a_reponer': reposition_amount
-            }
-            
-            return results
-        except Exception as e:
-            print(f"❌ Error en la predicción: {str(e)}")
-            # Devolver resultados vacíos en caso de error
-            return {
-                'necesita_reposicion': np.zeros(len(data), dtype=int),
-                'cantidad_a_reponer': np.zeros(len(data))
-            }
-    
-    def predict_single(self, data_dict):
-        """Método conveniente para predicción de un solo registro"""
-        try:
-            # Convertir diccionario a DataFrame
-            df = pd.DataFrame([data_dict])
-            
-            # Realizar predicción
-            results = self.predict(df)
-            
-            # Devolver resultados para el único registro
-            return {
-                'necesita_reposicion': bool(results['necesita_reposicion'][0]),
-                'cantidad_a_reponer': float(results['cantidad_a_reponer'][0])
-            }
-        except Exception as e:
-            print(f"❌ Error en predicción individual: {str(e)}")
-            return {'necesita_reposicion': False, 'cantidad_a_reponer': 0.0}
 
 def load_models():
     """Cargar los modelos existentes"""
