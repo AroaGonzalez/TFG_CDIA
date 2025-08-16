@@ -1,0 +1,384 @@
+{
+  "product_stats": {
+    "total_products_analyzed": 94,
+    "avg_accuracy": 0.7632127659574467,
+    "std_accuracy": 0.181000853817295,
+    "best_product_accuracy": 1.0,
+    "worst_product_accuracy": 0.333
+  },
+  "store_stats": {
+    "total_stores_analyzed": 188,
+    "avg_accuracy": 0.7118882978723404,
+    "std_accuracy": 0.3380204140139104,
+    "best_store_accuracy": 1.0,
+    "worst_store_accuracy": 0.0
+  },
+  "top_products": {
+    "121": {
+      "accuracy": 1.0,
+      "count": 12,
+      "real_restock_rate": 0.0,
+      "pred_restock_rate": 0.0,
+      "avg_quantity_error": 1005.0,
+      "total_real_quantity": 12060.0,
+      "total_pred_quantity": 0.0
+    },
+    "123": {
+      "accuracy": 1.0,
+      "count": 5,
+      "real_restock_rate": 0.8,
+      "pred_restock_rate": 0.8,
+      "avg_quantity_error": 46.436,
+      "total_real_quantity": 570.0,
+      "total_pred_quantity": 460.821
+    },
+    "165": {
+      "accuracy": 1.0,
+      "count": 5,
+      "real_restock_rate": 0.2,
+      "pred_restock_rate": 0.2,
+      "avg_quantity_error": 157.163,
+      "total_real_quantity": 900.0,
+      "total_pred_quantity": 114.187
+    },
+    "166": {
+      "accuracy": 1.0,
+      "count": 9,
+      "real_restock_rate": 0.0,
+      "pred_restock_rate": 0.0,
+      "avg_quantity_error": 168.889,
+      "total_real_quantity": 1520.0,
+      "total_pred_quantity": 0.0
+    },
+    "173": {
+      "accuracy": 1.0,
+      "count": 7,
+      "real_restock_rate": 0.143,
+      "pred_restock_rate": 0.143,
+      "avg_quantity_error": 11.654,
+      "total_real_quantity": 130.0,
+      "total_pred_quantity": 48.421
+    },
+    "192": {
+      "accuracy": 1.0,
+      "count": 7,
+      "real_restock_rate": 0.0,
+      "pred_restock_rate": 0.0,
+      "avg_quantity_error": 3600.0,
+      "total_real_quantity": 25200.0,
+      "total_pred_quantity": 0.0
+    },
+    "209": {
+      "accuracy": 1.0,
+      "count": 5,
+      "real_restock_rate": 0.0,
+      "pred_restock_rate": 0.0,
+      "avg_quantity_error": 0.0,
+      "total_real_quantity": 0.0,
+      "total_pred_quantity": 0.0
+    },
+    "210": {
+      "accuracy": 1.0,
+      "count": 6,
+      "real_restock_rate": 0.167,
+      "pred_restock_rate": 0.167,
+      "avg_quantity_error": 27.664,
+      "total_real_quantity": 165.0,
+      "total_pred_quantity": 120.985
+    },
+    "211": {
+      "accuracy": 1.0,
+      "count": 9,
+      "real_restock_rate": 0.111,
+      "pred_restock_rate": 0.111,
+      "avg_quantity_error": 78.417,
+      "total_real_quantity": 760.0,
+      "total_pred_quantity": 54.251
+    },
+    "213": {
+      "accuracy": 1.0,
+      "count": 6,
+      "real_restock_rate": 0.0,
+      "pred_restock_rate": 0.0,
+      "avg_quantity_error": 153.333,
+      "total_real_quantity": 920.0,
+      "total_pred_quantity": 0.0
+    }
+  },
+  "bottom_products": {
+    "177": {
+      "accuracy": 0.333,
+      "count": 6,
+      "real_restock_rate": 0.0,
+      "pred_restock_rate": 0.667,
+      "avg_quantity_error": 24.973,
+      "total_real_quantity": 0.8,
+      "total_pred_quantity": 149.039
+    },
+    "241": {
+      "accuracy": 0.357,
+      "count": 14,
+      "real_restock_rate": 0.286,
+      "pred_restock_rate": 0.929,
+      "avg_quantity_error": 2032.011,
+      "total_real_quantity": 11400.0,
+      "total_pred_quantity": 39848.159
+    },
+    "236": {
+      "accuracy": 0.368,
+      "count": 19,
+      "real_restock_rate": 0.316,
+      "pred_restock_rate": 0.947,
+      "avg_quantity_error": 510.559,
+      "total_real_quantity": 9060.0,
+      "total_pred_quantity": 10018.038
+    },
+    "127": {
+      "accuracy": 0.375,
+      "count": 24,
+      "real_restock_rate": 0.292,
+      "pred_restock_rate": 0.917,
+      "avg_quantity_error": 619.36,
+      "total_real_quantity": 11820.0,
+      "total_pred_quantity": 16476.207
+    },
+    "179": {
+      "accuracy": 0.375,
+      "count": 8,
+      "real_restock_rate": 0.375,
+      "pred_restock_rate": 1.0,
+      "avg_quantity_error": 23.049,
+      "total_real_quantity": 13.6,
+      "total_pred_quantity": 195.984
+    },
+    "238": {
+      "accuracy": 0.429,
+      "count": 14,
+      "real_restock_rate": 0.429,
+      "pred_restock_rate": 1.0,
+      "avg_quantity_error": 239.202,
+      "total_real_quantity": 2190.0,
+      "total_pred_quantity": 3438.608
+    },
+    "125": {
+      "accuracy": 0.467,
+      "count": 15,
+      "real_restock_rate": 0.2,
+      "pred_restock_rate": 0.6,
+      "avg_quantity_error": 492.453,
+      "total_real_quantity": 3840.0,
+      "total_pred_quantity": 6981.987
+    },
+    "135": {
+      "accuracy": 0.5,
+      "count": 20,
+      "real_restock_rate": 0.5,
+      "pred_restock_rate": 1.0,
+      "avg_quantity_error": 92.165,
+      "total_real_quantity": 1320.0,
+      "total_pred_quantity": 2358.226
+    },
+    "168": {
+      "accuracy": 0.5,
+      "count": 6,
+      "real_restock_rate": 0.5,
+      "pred_restock_rate": 1.0,
+      "avg_quantity_error": 237.469,
+      "total_real_quantity": 1960.0,
+      "total_pred_quantity": 1605.407
+    },
+    "180": {
+      "accuracy": 0.5,
+      "count": 8,
+      "real_restock_rate": 0.375,
+      "pred_restock_rate": 0.625,
+      "avg_quantity_error": 5.893,
+      "total_real_quantity": 30.0,
+      "total_pred_quantity": 61.141
+    }
+  },
+  "top_stores": {
+    "61": {
+      "accuracy": 1.0,
+      "count": 2,
+      "real_restock_rate": 1.0,
+      "pred_restock_rate": 1.0,
+      "avg_quantity_error": 82.504,
+      "total_real_quantity": 736.0,
+      "total_pred_quantity": 785.82
+    },
+    "93": {
+      "accuracy": 1.0,
+      "count": 3,
+      "real_restock_rate": 0.0,
+      "pred_restock_rate": 0.0,
+      "avg_quantity_error": 0.0,
+      "total_real_quantity": 0.0,
+      "total_pred_quantity": 0.0
+    },
+    "265": {
+      "accuracy": 1.0,
+      "count": 2,
+      "real_restock_rate": 0.0,
+      "pred_restock_rate": 0.0,
+      "avg_quantity_error": 624.0,
+      "total_real_quantity": 1248.0,
+      "total_pred_quantity": 0.0
+    },
+    "379": {
+      "accuracy": 1.0,
+      "count": 2,
+      "real_restock_rate": 0.0,
+      "pred_restock_rate": 0.0,
+      "avg_quantity_error": 16.0,
+      "total_real_quantity": 32.0,
+      "total_pred_quantity": 0.0
+    },
+    "528": {
+      "accuracy": 1.0,
+      "count": 2,
+      "real_restock_rate": 0.0,
+      "pred_restock_rate": 0.0,
+      "avg_quantity_error": 366.0,
+      "total_real_quantity": 732.0,
+      "total_pred_quantity": 0.0
+    },
+    "853": {
+      "accuracy": 1.0,
+      "count": 2,
+      "real_restock_rate": 0.0,
+      "pred_restock_rate": 0.0,
+      "avg_quantity_error": 0.0,
+      "total_real_quantity": 0.0,
+      "total_pred_quantity": 0.0
+    },
+    "920": {
+      "accuracy": 1.0,
+      "count": 2,
+      "real_restock_rate": 0.0,
+      "pred_restock_rate": 0.0,
+      "avg_quantity_error": 230.0,
+      "total_real_quantity": 460.0,
+      "total_pred_quantity": 0.0
+    },
+    "1247": {
+      "accuracy": 1.0,
+      "count": 2,
+      "real_restock_rate": 0.5,
+      "pred_restock_rate": 0.5,
+      "avg_quantity_error": 12.989,
+      "total_real_quantity": 256.0,
+      "total_pred_quantity": 281.979
+    },
+    "1498": {
+      "accuracy": 1.0,
+      "count": 3,
+      "real_restock_rate": 0.0,
+      "pred_restock_rate": 0.0,
+      "avg_quantity_error": 333.333,
+      "total_real_quantity": 1000.0,
+      "total_pred_quantity": 0.0
+    },
+    "1507": {
+      "accuracy": 1.0,
+      "count": 2,
+      "real_restock_rate": 0.0,
+      "pred_restock_rate": 0.0,
+      "avg_quantity_error": 1.0,
+      "total_real_quantity": 2.0,
+      "total_pred_quantity": 0.0
+    }
+  },
+  "bottom_stores": {
+    "1644": {
+      "accuracy": 0.0,
+      "count": 3,
+      "real_restock_rate": 0.0,
+      "pred_restock_rate": 1.0,
+      "avg_quantity_error": 92.288,
+      "total_real_quantity": 150.0,
+      "total_pred_quantity": 426.864
+    },
+    "1839": {
+      "accuracy": 0.0,
+      "count": 2,
+      "real_restock_rate": 0.5,
+      "pred_restock_rate": 0.5,
+      "avg_quantity_error": 35.047,
+      "total_real_quantity": 40.2,
+      "total_pred_quantity": 30.295
+    },
+    "2411": {
+      "accuracy": 0.0,
+      "count": 2,
+      "real_restock_rate": 1.0,
+      "pred_restock_rate": 0.0,
+      "avg_quantity_error": 1210.0,
+      "total_real_quantity": 2420.0,
+      "total_pred_quantity": 0.0
+    },
+    "2529": {
+      "accuracy": 0.0,
+      "count": 2,
+      "real_restock_rate": 0.0,
+      "pred_restock_rate": 1.0,
+      "avg_quantity_error": 357.843,
+      "total_real_quantity": 0.0,
+      "total_pred_quantity": 715.685
+    },
+    "2840": {
+      "accuracy": 0.0,
+      "count": 2,
+      "real_restock_rate": 0.0,
+      "pred_restock_rate": 1.0,
+      "avg_quantity_error": 504.76,
+      "total_real_quantity": 0.0,
+      "total_pred_quantity": 1009.519
+    },
+    "2965": {
+      "accuracy": 0.0,
+      "count": 2,
+      "real_restock_rate": 1.0,
+      "pred_restock_rate": 0.0,
+      "avg_quantity_error": 785.0,
+      "total_real_quantity": 1570.0,
+      "total_pred_quantity": 0.0
+    },
+    "3195": {
+      "accuracy": 0.0,
+      "count": 2,
+      "real_restock_rate": 0.0,
+      "pred_restock_rate": 1.0,
+      "avg_quantity_error": 1108.16,
+      "total_real_quantity": 0.0,
+      "total_pred_quantity": 2216.32
+    },
+    "3297": {
+      "accuracy": 0.0,
+      "count": 2,
+      "real_restock_rate": 0.0,
+      "pred_restock_rate": 1.0,
+      "avg_quantity_error": 2203.627,
+      "total_real_quantity": 3000.0,
+      "total_pred_quantity": 7407.254
+    },
+    "3402": {
+      "accuracy": 0.0,
+      "count": 2,
+      "real_restock_rate": 1.0,
+      "pred_restock_rate": 0.0,
+      "avg_quantity_error": 1920.0,
+      "total_real_quantity": 3840.0,
+      "total_pred_quantity": 0.0
+    },
+    "3644": {
+      "accuracy": 0.0,
+      "count": 2,
+      "real_restock_rate": 1.0,
+      "pred_restock_rate": 0.0,
+      "avg_quantity_error": 2700.0,
+      "total_real_quantity": 5400.0,
+      "total_pred_quantity": 0.0
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "best_f1": {
+    "threshold": 0.25000000000000006,
+    "f1_score": 0.5581395348837208,
+    "service_level": 0.9292493528904228
+  },
+  "best_service": {
+    "threshold": 0.1,
+    "f1_score": 0.4119496855345912,
+    "service_level": 1.0
+  },
+  "best_operational": {
+    "threshold": 0.25000000000000006,
+    "f1_score": 0.5581395348837208,
+    "operational_score": 0.427808599087382
+  }
+}

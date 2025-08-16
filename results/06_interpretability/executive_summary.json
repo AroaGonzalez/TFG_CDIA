@@ -1,0 +1,61 @@
+{
+  "interpretability_analysis": {
+    "objective": "An\u00e1lisis de interpretabilidad y explicabilidad de modelos de predicci\u00f3n de stock",
+    "methods_used": [
+      "\u00c1rboles de decisi\u00f3n interpretables",
+      "An\u00e1lisis de importancia de caracter\u00edsticas",
+      "Importancia por permutaci\u00f3n",
+      "Explicaciones LIME para casos espec\u00edficos",
+      "Extracci\u00f3n de reglas de negocio"
+    ],
+    "key_findings": {
+      "most_important_features_classification": [
+        {
+          "feature": "alias_coef_variacion_sqrt",
+          "importance": 0.1973214250392822
+        },
+        {
+          "feature": "alias_pct_temporada_alta",
+          "importance": 0.1359868994263772
+        },
+        {
+          "feature": "alias_pct_fin_semana",
+          "importance": 0.126086861069504
+        },
+        {
+          "feature": "alias_frecuencia",
+          "importance": 0.0759002503598247
+        },
+        {
+          "feature": "dia_del_a\u00f1o",
+          "importance": 0.0704489625362917
+        }
+      ],
+      "most_important_features_regression": [
+        {
+          "feature": "loc_tama\u00f1o_Grande",
+          "importance": 0.3198232416050586
+        },
+        {
+          "feature": "alias_pct_temporada_alta",
+          "importance": 0.1743731545268978
+        },
+        {
+          "feature": "alias_frecuencia_log",
+          "importance": 0.173574792854478
+        },
+        {
+          "feature": "loc_diversidad_alias",
+          "importance": 0.0753208696268012
+        },
+        {
+          "feature": "alias_coef_variacion",
+          "importance": 0.0531478820560098
+        }
+      ],
+      "business_rules_count": 5,
+      "interpretation": "Los modelos son interpretables y las decisiones pueden explicarse a stakeholders de negocio"
+    },
+    "generated_at": "2025-08-15 22:23:09"
+  }
+}

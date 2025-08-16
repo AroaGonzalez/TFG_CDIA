@@ -86,6 +86,20 @@ def load_best_models_from_results(class_results, reg_results):
 
 def load_data_and_models():
    """Cargar datos preprocesados y mejores modelos del paso 3"""
+   
+   # NUEVO: Verificar archivos requeridos
+   required_files = [
+       'data/processed/02_features/features_engineered.csv',
+       'results/03_model_comparison/classification_results.csv',
+       'results/03_model_comparison/regression_results.csv'
+   ]
+   
+   missing_files = [f for f in required_files if not os.path.exists(f)]
+   if missing_files:
+       print(f"❌ Archivos faltantes: {missing_files}")
+       print("   Ejecuta primero los scripts anteriores (01, 02 y 03)")
+       return None, None, None, None, None, None, None
+   
    # Cargar datos
    df = pd.read_csv('data/processed/02_features/features_engineered.csv')
    
@@ -123,26 +137,45 @@ def load_data_and_models():
            print(f"   • RMSE: {best_reg_rmse:.2f}")
            print(f"   • R²: {best_reg_r2:.4f}")
        
-   except:
-       print("⚠️ No se encontraron resultados del paso 3, continuando sin ellos")
+   except Exception as e:
+       print(f"⚠️ Error al cargar resultados del paso 3: {e}")
        class_results = pd.DataFrame()
        reg_results = pd.DataFrame()
    
-   # Cargar las importancias de características del paso 3
-   importance_files = [f for f in os.listdir('results/03_model_comparison') 
-                     if f.startswith('importance_') and f.endswith('.csv')]
+   # NUEVO: Manejo mejorado de importancias de características
+   importance_dir = 'results/03_model_comparison'
+   importance_files = []
+   
+   if os.path.exists(importance_dir):
+       importance_files = [f for f in os.listdir(importance_dir) 
+                          if f.startswith('importance_') and f.endswith('.csv')]
    
    feature_importances = {}
-   for file in importance_files:
-       model_name = file.replace('importance_', '').replace('.csv', '')
-       importance_df = pd.read_csv(f'results/03_model_comparison/{file}')
-       feature_importances[model_name] = importance_df
-   
-   # Identificar características importantes (unión de top 20 de cada modelo)
    top_features = set()
-   for model, imp_df in feature_importances.items():
-       top_20 = imp_df.head(20)['feature'].tolist()
-       top_features.update(top_20)
+   
+   if not importance_files:
+       print("⚠️ No se encontraron archivos de importancia de características")
+       print("   Usando todas las características disponibles")
+       # Fallback: usar todas las features numéricas
+       all_features = [col for col in df.columns 
+                      if col not in ['ID_ALIAS', 'ID_LOCALIZACION_COMPRA', 
+                                   'necesita_reposicion', 'cantidad_a_reponer', 
+                                   'log_cantidad_a_reponer']]
+       numeric_features = df[all_features].select_dtypes(include=['number']).columns.tolist()
+       top_features = set(numeric_features[:50])  # Usar top 50 como fallback
+   else:
+       # Procesar archivos de importancia existentes
+       for file in importance_files:
+           model_name = file.replace('importance_', '').replace('.csv', '')
+           try:
+               importance_df = pd.read_csv(f'{importance_dir}/{file}')
+               feature_importances[model_name] = importance_df
+               # Agregar top 20 de cada modelo
+               top_20 = importance_df.head(20)['feature'].tolist()
+               top_features.update(top_20)
+           except Exception as e:
+               print(f"⚠️ Error al cargar {file}: {e}")
+               continue
    
    # Reconstruir los mejores modelos basados en resultados previos
    best_class_model, best_reg_model = load_best_models_from_results(class_results, reg_results)
@@ -849,6 +882,11 @@ def main():
    
    # Cargar datos y modelos
    df, all_features, top_features, best_class_model, best_reg_model, class_results, reg_results = load_data_and_models()
+   
+   if not top_features:
+       print("⚠️ No se identificaron top features, usando todas las features disponibles")
+       numeric_features = df[all_features].select_dtypes(include=['number']).columns.tolist()
+       top_features = numeric_features[:50]  # Limitar a 50 para eficiencia
    
    # Preparar datos para ensemble learning
    data = prepare_data(df, all_features, top_features)

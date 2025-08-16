@@ -1,0 +1,181 @@
+{
+  "model_info": {
+    "version": "1.0.0",
+    "created_at": "2025-08-16 09:48:33",
+    "classifier_type": "GradientBoostingClassifier",
+    "regressor_type": "XGBRegressor",
+    "scaler_type": "RobustScaler",
+    "optimized_threshold": 0.25,
+    "feature_count": 32
+  },
+  "performance_metrics": {
+    "classification": {
+      "accuracy": 0.684346701164295,
+      "precision": 0.3657587548638132,
+      "recall": 0.5371428571428571,
+      "f1_score": 0.4351851851851852,
+      "threshold": 0.25
+    },
+    "regression": {
+      "mae": 437.5776944505408,
+      "rmse": 1006.1987038727502,
+      "r2": 0.6761198379517321,
+      "evaluated_cases": 94
+    },
+    "evaluation_date": "2025-08-16 09:48:31"
+  },
+  "feature_importance": {
+    "classification": [
+      {
+        "feature": "alias_pct_temporada_alta",
+        "importance": 0.12385805879570388
+      },
+      {
+        "feature": "antiguedad_normalizada",
+        "importance": 0.11714480254635261
+      },
+      {
+        "feature": "alias_coef_variacion_sqrt",
+        "importance": 0.10693060503617799
+      },
+      {
+        "feature": "alias_coef_variacion",
+        "importance": 0.09504971202582183
+      },
+      {
+        "feature": "dia_del_a\u00f1o",
+        "importance": 0.07559039565213119
+      },
+      {
+        "feature": "alias_pct_fin_semana",
+        "importance": 0.07352104425352593
+      },
+      {
+        "feature": "mes_sen",
+        "importance": 0.05262678915289865
+      },
+      {
+        "feature": "alias_frecuencia",
+        "importance": 0.05020838486232241
+      },
+      {
+        "feature": "loc_diversidad_alias",
+        "importance": 0.04858835216368173
+      },
+      {
+        "feature": "loc_num_registros",
+        "importance": 0.04806944663914379
+      }
+    ],
+    "regression": [
+      {
+        "feature": "loc_tama\u00f1o_Peque\u00f1a",
+        "importance": 0.6116326451301575
+      },
+      {
+        "feature": "loc_tama\u00f1o_Grande",
+        "importance": 0.08435561507940292
+      },
+      {
+        "feature": "alias_frecuencia",
+        "importance": 0.045404426753520966
+      },
+      {
+        "feature": "loc_diversidad_alias",
+        "importance": 0.039975594729185104
+      },
+      {
+        "feature": "alias_pct_temporada_alta",
+        "importance": 0.03917801380157471
+      },
+      {
+        "feature": "alias_coef_variacion",
+        "importance": 0.02499251998960972
+      },
+      {
+        "feature": "alias_pct_fin_semana",
+        "importance": 0.019452624022960663
+      },
+      {
+        "feature": "es_alias_popular_loc_peque\u00f1a",
+        "importance": 0.01584320142865181
+      },
+      {
+        "feature": "semana_del_a\u00f1o",
+        "importance": 0.012591484934091568
+      },
+      {
+        "feature": "dato_reciente",
+        "importance": 0.012314116582274437
+      }
+    ]
+  },
+  "demo_examples": [
+    {
+      "id_alias": 241,
+      "id_localizacion": 7499,
+      "real": {
+        "necesita_reposicion": true,
+        "cantidad_a_reponer": 6400.0
+      },
+      "prediccion": {
+        "necesita_reposicion": true,
+        "probabilidad_reposicion": 0.39203672496978165,
+        "cantidad_a_reponer": 2837.457275390625
+      },
+      "clasificacion_correcta": true
+    },
+    {
+      "id_alias": 140,
+      "id_localizacion": 9261,
+      "real": {
+        "necesita_reposicion": true,
+        "cantidad_a_reponer": 400.0
+      },
+      "prediccion": {
+        "necesita_reposicion": true,
+        "probabilidad_reposicion": 0.564682424699607,
+        "cantidad_a_reponer": 1078.12451171875
+      },
+      "clasificacion_correcta": true
+    },
+    {
+      "id_alias": 142,
+      "id_localizacion": 3299,
+      "real": {
+        "necesita_reposicion": false,
+        "cantidad_a_reponer": 500.0
+      },
+      "prediccion": {
+        "necesita_reposicion": true,
+        "probabilidad_reposicion": 0.3633971483685867,
+        "cantidad_a_reponer": 3263.42041015625
+      },
+      "clasificacion_correcta": false
+    },
+    {
+      "id_alias": 218,
+      "id_localizacion": 11952,
+      "real": {
+        "necesita_reposicion": false,
+        "cantidad_a_reponer": 0.0
+      },
+      "prediccion": {
+        "necesita_reposicion": true,
+        "probabilidad_reposicion": 0.295384890816545,
+        "cantidad_a_reponer": 764.3233032226562
+      },
+      "clasificacion_correcta": false
+    }
+  ],
+  "usage_instructions": {
+    "loading": "Use joblib.load() to load the predictor",
+    "prediction": "Call predictor.predict(X) with scaled feature data",
+    "input_format": "DataFrame or numpy array with features in correct order",
+    "output_format": {
+      "necesita_reposicion": "boolean array",
+      "probabilidad_reposicion": "float array [0,1]",
+      "cantidad_a_reponer": "float array (units to restock)"
+    }
+  }
+}

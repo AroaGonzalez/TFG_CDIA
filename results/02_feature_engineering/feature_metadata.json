@@ -10,6 +10,7 @@
     "ID_ALIAS_ANALYTICS",
     "RN",
     "a\u00f1o_mes",
+    "weekday",
     "semana_del_a\u00f1o",
     "dia_del_a\u00f1o",
     "es_fin_semana",
@@ -44,8 +45,8 @@
     "loc_tama\u00f1o_Peque\u00f1a",
     "dato_muy_reciente_win"
   ],
-  "total_features": 43,
-  "numeric_features": 32,
+  "total_features": 44,
+  "numeric_features": 33,
   "categorical_features": 11,
   "targets": [
     "necesita_reposicion",
@@ -54,7 +55,7 @@
   ],
   "dataset_shape": [
     3862,
-    48
+    49
   ],
-  "created_at": "2025-07-15 11:26:02"
+  "created_at": "2025-08-15 18:22:55"
 }

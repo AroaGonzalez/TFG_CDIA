@@ -155,6 +155,21 @@ def main():
    plt.ylabel('Valor promedio')
    plt.savefig(f'{plots_dir}/evolucion_temporal.png', dpi=300)
    
+   print("\n📆 Distribución por día de la semana")
+   print("-" * 30)
+
+    # Crear columna 'weekday' (0 = lunes, 6 = domingo)
+   df_clean['weekday'] = df_clean['FECHA_HORA_EJECUCION_STOCK_RECUENTOS'].dt.dayofweek
+   plt.figure(figsize=(8, 5))
+   sns.countplot(x='weekday', data=df_clean)
+   plt.title('Distribución de recuentos por día de la semana')
+   plt.xlabel('Día de la semana (0 = Lunes)')
+   plt.ylabel('Número de recuentos')
+   plt.tight_layout()
+
+   # Guardar el gráfico
+   plt.savefig(f'{plots_dir}/weekday_distribution.png', dpi=300)
+
    # PASO 4: Análisis de correlaciones básicas
    print("\n📈 PASO 4: ANÁLISIS DE CORRELACIONES")
    print("-" * 30)

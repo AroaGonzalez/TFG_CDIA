@@ -1,0 +1,135 @@
+{
+  "report_metadata": {
+    "generated_at": "2025-08-16 10:14:40",
+    "report_type": "Business Impact Analysis (Operational Focus)",
+    "model_version": "Final Hybrid Predictor v1.0"
+  },
+  "executive_summary": {
+    "overall_performance": {
+      "model_accuracy": 0.7540983606557377,
+      "service_level_achieved": 0.9292493528904228,
+      "decision_accuracy": 0.7540983606557377,
+      "restock_efficiency": 0.4699738903394256,
+      "recommendation": "DEPLOY"
+    },
+    "key_findings": [
+      "El modelo alcanza un 75.4% de precisi\u00f3n en la clasificaci\u00f3n",
+      "Nivel de servicio al cliente del 92.9%",
+      "Precisi\u00f3n en decisiones de inventario del 75.4%",
+      "Eficiencia en reposiciones del 47.0%",
+      "Reducci\u00f3n de rotura de stock al 7.1%",
+      "Tasa de exceso de inventario del 17.5%"
+    ],
+    "operational_value_proposition": {
+      "correct_decisions": 874,
+      "service_level": 0.9292493528904228,
+      "inventory_efficiency": 2.4746992741089193,
+      "restock_coverage": 0.6870229007633588
+    }
+  },
+  "detailed_metrics": {
+    "classification_metrics": {
+      "accuracy": 0.7540983606557377,
+      "precision": 0.4699738903394256,
+      "recall": 0.6870229007633588,
+      "f1_score": 0.5581395348837208
+    },
+    "inventory_metrics": {
+      "service_level": 0.9292493528904228,
+      "stock_out_rate": 0.07075064710957722,
+      "overstock_rate": 0.17515099223468508,
+      "inventory_efficiency": 2.4746992741089193,
+      "decision_accuracy": 0.7540983606557377,
+      "restock_efficiency": 0.4699738903394256,
+      "restock_coverage": 0.6870229007633588
+    },
+    "operational_impact": {
+      "correct_restock_decisions": 180,
+      "correct_no_restock_decisions": 694,
+      "missed_restock_opportunities": 82,
+      "unnecessary_restock_decisions": 203,
+      "total_correct_decisions": 874,
+      "units_excess_inventory": 169484.43410897255,
+      "units_missed_restock": 316316.0
+    },
+    "prediction_accuracy": {
+      "mae_quantity_true_positives": 294.91240985658436,
+      "total_required_units": 725504.2,
+      "total_predicted_units": 293168.63167595863,
+      "prediction_efficiency": 2.4746992741089193
+    },
+    "confusion_matrix": {
+      "true_positives": 180,
+      "false_positives": 203,
+      "false_negatives": 82,
+      "true_negatives": 694
+    }
+  },
+  "optimization_recommendations": {
+    "threshold_optimization": {
+      "current_threshold": 0.3,
+      "optimal_for_f1": {
+        "threshold": 0.25000000000000006,
+        "f1_score": 0.5581395348837208,
+        "service_level": 0.9292493528904228
+      },
+      "optimal_for_service": {
+        "threshold": 0.1,
+        "f1_score": 0.4119496855345912,
+        "service_level": 1.0
+      },
+      "optimal_for_operations": {
+        "threshold": 0.25000000000000006,
+        "f1_score": 0.5581395348837208,
+        "operational_score": 0.427808599087382
+      }
+    },
+    "segment_focus_areas": {
+      "low_performing_products": 10,
+      "low_performing_stores": 10,
+      "improvement_potential": "Focus on products and stores with accuracy < 60%"
+    },
+    "implementation_roadmap": [
+      "Phase 1: Deploy model in pilot stores (highest performing segments)",
+      "Phase 2: Optimize threshold based on operational priorities",
+      "Phase 3: Roll out to all stores with performance monitoring",
+      "Phase 4: Continuous improvement based on segment analysis"
+    ]
+  },
+  "risk_assessment": {
+    "operational_risks": [
+      "Dependency on data quality and completeness",
+      "Performance variation across different product categories",
+      "Seasonal patterns may require model updates",
+      "Stock-out rate of 7.1% may impact customer satisfaction",
+      "Overstock rate of 17.5% ties up inventory space"
+    ],
+    "mitigation_strategies": [
+      "Implement robust data quality monitoring",
+      "Set up automated model performance tracking",
+      "Establish fallback procedures for system downtime",
+      "Create segment-specific optimization strategies",
+      "Monitor service level metrics continuously"
+    ]
+  },
+  "next_steps": {
+    "immediate_actions": [
+      "Validate results with business stakeholders",
+      "Prepare pilot deployment plan for top-performing segments",
+      "Set up monitoring and alerting systems",
+      "Train staff on new inventory management process"
+    ],
+    "medium_term_goals": [
+      "Implement A/B testing framework",
+      "Develop real-time model updating capabilities",
+      "Integrate with existing inventory management systems",
+      "Optimize thresholds by product category"
+    ],
+    "long_term_vision": [
+      "Expand to demand forecasting and supply chain optimization",
+      "Implement dynamic inventory management",
+      "Develop personalized restock recommendations",
+      "Create automated inventory optimization system"
+    ]
+  }
+}

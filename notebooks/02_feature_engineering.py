@@ -264,6 +264,38 @@ def create_interaction_features(df):
    new_features = [col for col in df.columns if col not in interaction_cols and 
                   ('_x_' in col or 'relativa' in col)]
    
+    # Enhanced plot of relative capacity metrics
+   plt.figure(figsize=(12, 7))
+
+   # Trimmed to avoid outliers
+   df_plot = df[(df['capacidad_relativa_alias'] <= 5) & (df['capacidad_relativa_tienda'] <= 1)]
+   # Alias-relative capacity
+   sns.histplot(df_plot['capacidad_relativa_alias'], 
+                color='royalblue', label='Relative to Alias', 
+                kde=True, stat='frequency', bins=50, alpha=0.6)
+
+   # Store-relative capacity
+   sns.histplot(df_plot['capacidad_relativa_tienda'], 
+                color='orange', label='Relative to Store', 
+                kde=True, stat='frequency', bins=50, alpha=0.4)
+
+   # Threshold reference
+   plt.axvline(1.0, color='gray', linestyle='--', linewidth=1)
+   plt.text(1.02, plt.ylim()[1]*0.95, 'x = 1.0', color='gray')
+
+    # Aesthetics
+   plt.title('Distribution of Relative Capacity Metrics', fontsize=16)
+   plt.xlabel('Relative Capacity Value', fontsize=13)
+   plt.ylabel('Frequency', fontsize=13)
+   plt.xticks(fontsize=11)
+   plt.yticks(fontsize=11)
+   plt.legend(title='Metric Type', fontsize=11, title_fontsize=12)
+   plt.grid(True, which='major', linestyle='--', alpha=0.3)
+   plt.tight_layout()
+
+   # Save figure
+   plt.savefig(f'{plots_dir}/capacidad_relativa_hist.png', dpi=300)
+ 
    print(f"✅ Características de interacción creadas: {len(new_features)}")
    return df
 

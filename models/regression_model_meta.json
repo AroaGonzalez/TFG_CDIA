@@ -1,0 +1,9 @@
+{
+  "model_name": "XGBoost (Log)",
+  "r2_score": 0.40416121035574726,
+  "mae_score": 489.6560448232719,
+  "rmse_score": 1021.939554115828,
+  "uses_log_transform": true,
+  "created_at": "2025-08-15 22:20:31",
+  "source": "Best model by R\u00b2 from log-transformed models"
+}

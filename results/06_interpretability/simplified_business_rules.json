@@ -1,0 +1,31 @@
+{
+  "rules": [
+    {
+      "feature": "dia_del_a\u00f1o",
+      "importance": 0.07044896253629171,
+      "description": "La caracter\u00edstica \"dia_del_a\u00f1o\" es cr\u00edtica para la decisi\u00f3n de reposici\u00f3n"
+    },
+    {
+      "feature": "alias_frecuencia",
+      "importance": 0.07590025035982478,
+      "description": "La caracter\u00edstica \"alias_frecuencia\" es cr\u00edtica para la decisi\u00f3n de reposici\u00f3n"
+    },
+    {
+      "feature": "alias_pct_fin_semana",
+      "importance": 0.12608686106950404,
+      "description": "La caracter\u00edstica \"alias_pct_fin_semana\" es cr\u00edtica para la decisi\u00f3n de reposici\u00f3n"
+    },
+    {
+      "feature": "alias_pct_temporada_alta",
+      "importance": 0.1359868994263772,
+      "description": "La caracter\u00edstica \"alias_pct_temporada_alta\" es cr\u00edtica para la decisi\u00f3n de reposici\u00f3n"
+    },
+    {
+      "feature": "alias_coef_variacion_sqrt",
+      "importance": 0.19732142503928224,
+      "description": "La caracter\u00edstica \"alias_coef_variacion_sqrt\" es cr\u00edtica para la decisi\u00f3n de reposici\u00f3n"
+    }
+  ],
+  "interpretation": "Caracter\u00edsticas m\u00e1s importantes para determinar necesidad de reposici\u00f3n",
+  "generated_at": "2025-08-15 22:23:06"
+}

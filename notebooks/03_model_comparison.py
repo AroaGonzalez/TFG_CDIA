@@ -19,11 +19,9 @@ import warnings
 import json
 from datetime import datetime
 from lightgbm.sklearn import LGBMRegressor
-warnings.filterwarnings('ignore')
-warnings.filterwarnings("ignore", category=UserWarning, module="sklearn.utils.validation")
-import logging
-logging.getLogger('lightgbm').setLevel(logging.ERROR)
-warnings.filterwarnings("ignore", category=UserWarning)
+warnings.filterwarnings('ignore', category=FutureWarning, module='sklearn')
+warnings.filterwarnings('ignore', category=UserWarning, module='lightgbm')
+
 # Algoritmos de clasificación
 from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier
@@ -651,111 +649,100 @@ def print_summary(class_results, reg_results):
            for i, (name, row) in enumerate(top_3_r2.iterrows(), 1):
                print(f"      {i}. {name}: {row['Test_R2']:.3f}")
 
-def save_best_models(class_predictions, reg_predictions):
-   """Guardar los mejores modelos para su posterior uso"""
-   print("\n💾 GUARDANDO MEJORES MODELOS")
-   print("-" * 30)
-   
-   # Mejor modelo de clasificación
-   if class_predictions:
-       try:
-           from joblib import dump
-           
-           # Identificar mejor modelo
-           best_model_name = None
-           best_f1 = -1
-           best_test_data = None
-           
-           for name, pred_data in class_predictions.items():
-               # Preferir modelos con buena interpretabilidad
-               if 'Random Forest' in name or 'XGBoost' in name or 'LightGBM' in name:
-                   model = pred_data['model']
-                   y_pred = pred_data['y_pred']
-                   y_true = None
-                   
-                   # Intentar obtener y_test de los datos de prueba almacenados
-                   for test_data_key, test_data_val in locals().items():
-                       if (test_data_key.endswith('test_data') and 
-                           isinstance(test_data_val, tuple) and 
-                           len(test_data_val) > 1):
-                           _, y_true, _ = test_data_val
-                           best_test_data = test_data_val
-                           break
-                   
-                   if y_true is not None:
-                       f1 = f1_score(y_true, y_pred)
-                       if f1 > best_f1:
-                           best_f1 = f1
-                           best_model_name = name
-           
-           if best_model_name:
-               best_model = class_predictions[best_model_name]['model']
-               dump(best_model, f'{models_dir}/best_classification_model.joblib')
-               
-               # Guardar metadata
-               model_meta = {
-                   'model_name': best_model_name,
-                   'f1_score': float(best_f1),
-                   'created_at': datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-               }
-               
-               with open(f'{models_dir}/classification_model_meta.json', 'w') as f:
-                   json.dump(model_meta, f, indent=2)
-               
-               print(f"✅ Mejor modelo de clasificación guardado: {best_model_name}")
-       except Exception as e:
-           print(f"⚠️ Error al guardar modelo de clasificación: {e}")
-   
-   # Mejor modelo de regresión
-   if reg_predictions:
-       try:
-           from joblib import dump
-           
-           # Identificar mejor modelo
-           best_model_name = None
-           best_r2 = -float('inf')
-           
-           for name, pred_data in reg_predictions.items():
-               # Preferir modelos con buena interpretabilidad y sin log transform
-               if ('Random Forest' in name or 'XGBoost' in name or 'LightGBM' in name) and '(Log)' not in name:
-                   model = pred_data['model']
-                   y_pred = pred_data['y_pred']
-                   
-                   # Intentar calcular R² directamente si tenemos los datos
-                   r2 = -float('inf')
-                   for test_data_key, test_data_val in locals().items():
-                       if (test_data_key.endswith('test_data') and 
-                           isinstance(test_data_val, tuple) and 
-                           len(test_data_val) > 1):
-                           _, y_true, _ = test_data_val
-                           if len(y_pred) == len(y_true):
-                               try:
-                                   r2 = r2_score(y_true, y_pred)
-                               except:
-                                   pass
-                               break
-                   
-                   if r2 > best_r2:
-                       best_r2 = r2
-                       best_model_name = name
-           
-           if best_model_name:
-               best_model = reg_predictions[best_model_name]['model']
-               dump(best_model, f'{models_dir}/best_regression_model.joblib')
-               
-               # Guardar metadata
-               model_meta = {
-                   'model_name': best_model_name,
-                   'r2_score': float(best_r2),
-                   'created_at': datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-               }
-               
-               with open(f'{models_dir}/regression_model_meta.json', 'w') as f:
-                   json.dump(model_meta, f, indent=2)
-               
-               print(f"✅ Mejor modelo de regresión guardado: {best_model_name}")
-       except Exception as e:
-           print(f"⚠️ Error al guardar modelo de regresión: {e}")
+def save_best_models(class_predictions, reg_predictions, class_results, reg_results):
+    """Guardar los mejores modelos para su posterior uso - VERSIÓN CORREGIDA"""
+    print("\n💾 GUARDANDO MEJORES MODELOS")
+    print("-" * 30)
+    
+    # Mejor modelo de clasificación
+    if class_predictions:
+        try:
+            from joblib import dump
+            
+            # Método 1: Usar los resultados guardados si están disponibles
+            if class_results is not None:
+                # Convertir a DataFrame si no lo es
+                if isinstance(class_results, dict):
+                    class_df = pd.DataFrame(class_results).T
+                else:
+                    class_df = class_results
+                
+                # Encontrar el mejor modelo por F1-Score
+                best_class_name = class_df['Test_F1'].idxmax()
+        
+                if best_class_name in class_predictions:
+                    best_class_model = class_predictions[best_class_name]['model']
+                    
+                    # Guardar modelo
+                    dump(best_class_model, f'{models_dir}/best_classification_model.joblib')
+                    
+                    # Guardar metadata completa
+                    class_meta = {
+                        'model_name': best_class_name,
+                        'f1_score': float(class_df.loc[best_class_name, 'Test_F1']),
+                        'accuracy': float(class_df.loc[best_class_name, 'Test_Accuracy']),
+                        'precision': float(class_df.loc[best_class_name, 'Test_Precision']),
+                        'recall': float(class_df.loc[best_class_name, 'Test_Recall']),
+                        'created_at': datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+                        'source': 'Best model by F1-Score from comprehensive analysis'
+                    }
+                    
+                    with open(f'{models_dir}/classification_model_meta.json', 'w') as f:
+                        json.dump(class_meta, f, indent=2)
+                
+                    print(f"✅ Mejor modelo clasificación guardado: {best_class_name}")
+                    print(f"   • F1-Score: {class_meta['f1_score']:.4f}")
+                    print(f"   • Accuracy: {class_meta['accuracy']:.4f}")
+                        
+        except Exception as e:
+            print(f"⚠️ Error al guardar modelo de clasificación: {e}")
+    
+    # Mejor modelo de regresión
+    if reg_predictions:
+        try:
+            from joblib import dump
+            
+            # Método 1: Usar los resultados guardados si están disponibles
+            if reg_results is not None:
+                # Convertir a DataFrame si no lo es
+                if isinstance(reg_results, dict):
+                    reg_df = pd.DataFrame(reg_results).T
+                else:
+                    reg_df = reg_results
+                
+                # Filtrar solo modelos con transformación logarítmica
+                log_models = reg_df[reg_df.index.str.contains('\\(Log\\)', regex=True)]
+                
+                if not log_models.empty:
+                    # Encontrar el mejor modelo por R²
+                    best_reg_name = log_models['Test_R2'].idxmax()
+            
+                    if best_reg_name in reg_predictions:
+                        best_reg_model = reg_predictions[best_reg_name]['model']
+                        
+                        # Guardar modelo
+                        dump(best_reg_model, f'{models_dir}/best_regression_model.joblib')
+                        
+                        # Guardar metadata completa
+                        reg_meta = {
+                            'model_name': best_reg_name,
+                            'r2_score': float(log_models.loc[best_reg_name, 'Test_R2']),
+                            'mae_score': float(log_models.loc[best_reg_name, 'Test_MAE']),
+                            'rmse_score': float(log_models.loc[best_reg_name, 'Test_RMSE']),
+                            'uses_log_transform': True,
+                            'created_at': datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+                            'source': 'Best model by R² from log-transformed models'
+                        }
+                        
+                        with open(f'{models_dir}/regression_model_meta.json', 'w') as f:
+                            json.dump(reg_meta, f, indent=2)
+                        
+                        print(f"✅ Mejor modelo regresión guardado: {best_reg_name}")
+                        print(f"   • R²: {reg_meta['r2_score']:.4f}")
+                        print(f"   • MAE: {reg_meta['mae_score']:.2f}")
+            
+        except Exception as e:
+            print(f"⚠️ Error al guardar modelo de regresión: {e}")
 
 def main():
    print("🚀 INICIANDO COMPARACIÓN DE ALGORITMOS ML")
@@ -786,7 +773,7 @@ def main():
        save_importance_analysis(class_predictions, final_features)
    
    # Guardar mejores modelos
-   save_best_models(class_predictions, reg_predictions)
+   save_best_models(class_predictions, reg_predictions, class_results, reg_results)
    
    # Imprimir resumen
    print_summary(class_results, reg_results)
