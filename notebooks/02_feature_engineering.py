@@ -553,6 +553,37 @@ def analyze_feature_importance(df, features, targets):
    
    return top_corr
 
+def validate_and_fix_data_consistency(df):
+    """Valida y corrige inconsistencias lógicas"""
+    print("\n🔍 VALIDANDO CONSISTENCIA LÓGICA DE DATOS")
+    print("-" * 50)
+    
+    # Identificar inconsistencias
+    inconsistencias = (df['necesita_reposicion'] == 0) & (df['cantidad_a_reponer'] > 0)
+    
+    if inconsistencias.any():
+        num_inconsistencias = inconsistencias.sum()
+        print(f"⚠️ Detectadas {num_inconsistencias:,} inconsistencias lógicas")
+        print(f"   • Casos donde necesita_reposicion=0 pero cantidad_a_reponer>0")
+        
+        # Mostrar algunos ejemplos
+        ejemplos = df[inconsistencias].head(3)
+        for _, row in ejemplos.iterrows():
+            print(f"   • ID_ALIAS: {row['ID_ALIAS']}, cantidad_a_reponer: {row['cantidad_a_reponer']}")
+        
+        # CORRECCIÓN: Si no necesita reposición, la cantidad debe ser 0
+        df.loc[inconsistencias, 'cantidad_a_reponer'] = 0.0
+        
+        # Si existe la columna log, también corregirla
+        if 'log_cantidad_a_reponer' in df.columns:
+            df.loc[inconsistencias, 'log_cantidad_a_reponer'] = 0.0
+        
+        print(f"✅ {num_inconsistencias:,} inconsistencias corregidas")
+    else:
+        print("✅ No se encontraron inconsistencias lógicas")
+    
+    return df
+
 def main():
    print("🚀 INICIANDO FEATURE ENGINEERING AVANZADO")
    print("="*60)
@@ -580,6 +611,8 @@ def main():
    
    if available_targets:
        top_features = analyze_feature_importance(df_final, features_final, available_targets)
+   
+   df_final = validate_and_fix_data_consistency(df_final)
    
    # Guardar dataset final
    os.makedirs('data/processed', exist_ok=True)

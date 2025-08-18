@@ -103,9 +103,22 @@ def load_all_results():
         print("⚠️ No se encontró reporte ejecutivo")
         results['executive_summary'] = {}
     
-    print(f"\n✅ Carga completada. Componentes disponibles: {len([k for k, v in results.items() if v])}")
+    print(f"\n✅ Carga completada. Componentes disponibles: {len([k for k, v in results.items() if _is_valid_data(v)])}")
     
     return results
+
+def _is_valid_data(data):
+    """Verificar si los datos son válidos (no vacíos)"""
+    if data is None:
+        return False
+    elif isinstance(data, pd.DataFrame):
+        return not data.empty
+    elif isinstance(data, dict):
+        return bool(data)
+    elif isinstance(data, list):
+        return len(data) > 0
+    else:
+        return bool(data)
 
 def create_executive_dashboard(results):
     """Crear dashboard ejecutivo con métricas principales"""
@@ -171,7 +184,7 @@ def create_executive_dashboard(results):
                       ha='center', va='center', transform=axes[0,1].transAxes)
         axes[0,1].set_title('Top 5 Modelos de Clasificación')
     
-    # 3. Análisis de sensibilidad de umbrales
+    # 4. Análisis de sensibilidad de umbrales
     if 'threshold_analysis' in results and not results['threshold_analysis'].empty:
         threshold_df = results['threshold_analysis']
         
@@ -273,9 +286,9 @@ def create_executive_dashboard(results):
         axes[2,1].grid(axis='y', alpha=0.3)
         
         # Añadir valores
-        for bar, value in zip(bars, values):
+        for i, (bar, value) in enumerate(zip(bars, values)):
             height = bar.get_height()
-            if 'Accuracy' in bar.get_x():
+            if i >= 2:  # Los últimos dos son porcentajes de accuracy
                 text = f'{value:.1f}%'
             else:
                 text = f'{value:,.0f}'
@@ -323,24 +336,10 @@ def create_model_comparison_chart(results):
         max_val = max(class_df['Test_Accuracy'].max(), class_df['Test_F1'].max())
         ax1.plot([min_val, max_val], [min_val, max_val], 'r--', alpha=0.5, label='Línea ideal')
         ax1.legend()
-    
-    # 2. MAE vs R² para regresión
-    if 'regression_results' in results and not results['regression_results'].empty:
-        reg_df = results['regression_results']
-        
-        scatter = ax2.scatter(reg_df['Test_MAE'], reg_df['Test_R2'], 
-                             s=100, alpha=0.7, c=range(len(reg_df)), cmap='plasma')
-        
-        # Etiquetar puntos principales
-        top_models = reg_df.nlargest(5, 'Test_R2')
-        for name, row in top_models.iterrows():
-            ax2.annotate(name[:15], (row['Test_MAE'], row['Test_R2']), 
-                        xytext=(5, 5), textcoords='offset points', fontsize=8)
-        
-        ax2.set_xlabel('Test MAE')
-        ax2.set_ylabel('Test R²')
-        ax2.set_title('MAE vs R² (Regresión)')
-        ax2.grid(alpha=0.3)
+    else:
+        ax1.text(0.5, 0.5, 'Datos de clasificación no disponibles', 
+                ha='center', va='center', transform=ax1.transAxes)
+        ax1.set_title('Accuracy vs F1-Score (Clasificación)')
     
     # 3. Cross-validation stability (clasificación)
     if 'classification_results' in results and not results['classification_results'].empty:
@@ -356,6 +355,10 @@ def create_model_comparison_chart(results):
         ax3.set_ylabel('CV Accuracy')
         ax3.set_title('Estabilidad Cross-Validation (Clasificación)')
         ax3.grid(alpha=0.3)
+    else:
+        ax3.text(0.5, 0.5, 'Datos CV clasificación no disponibles', 
+                ha='center', va='center', transform=ax3.transAxes)
+        ax3.set_title('Estabilidad Cross-Validation (Clasificación)')
     
     # 4. Cross-validation stability (regresión)
     if 'regression_results' in results and not results['regression_results'].empty:
@@ -371,6 +374,10 @@ def create_model_comparison_chart(results):
         ax4.set_ylabel('CV R²')
         ax4.set_title('Estabilidad Cross-Validation (Regresión)')
         ax4.grid(alpha=0.3)
+    else:
+        ax4.text(0.5, 0.5, 'Datos CV regresión no disponibles', 
+                ha='center', va='center', transform=ax4.transAxes)
+        ax4.set_title('Estabilidad Cross-Validation (Regresión)')
     
     plt.tight_layout()
     plt.savefig(f'{plots_dir}/model_comparison_detailed.png', dpi=300, bbox_inches='tight')

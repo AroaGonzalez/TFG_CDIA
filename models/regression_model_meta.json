@@ -1,9 +1,10 @@
 {
-  "model_name": "XGBoost (Log)",
-  "r2_score": 0.40416121035574726,
-  "mae_score": 489.6560448232719,
-  "rmse_score": 1021.939554115828,
+  "model_name": "LightGBM (Log)",
+  "selection_criteria": "Best Test_R2 from log-transformed models",
+  "r2_score": 0.6000500571779589,
+  "mae_score": 622.6310089268762,
+  "rmse_score": 1249.5487239326014,
   "uses_log_transform": true,
-  "created_at": "2025-08-15 22:20:31",
+  "created_at": "2025-08-17 17:25:00",
   "source": "Best model by R\u00b2 from log-transformed models"
 }

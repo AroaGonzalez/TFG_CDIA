@@ -654,12 +654,11 @@ def save_best_models(class_predictions, reg_predictions, class_results, reg_resu
     print("\n💾 GUARDANDO MEJORES MODELOS")
     print("-" * 30)
     
-    # Mejor modelo de clasificación
+    # Mejor modelo de clasificación - CAMBIO AQUÍ
     if class_predictions:
         try:
             from joblib import dump
             
-            # Método 1: Usar los resultados guardados si están disponibles
             if class_results is not None:
                 # Convertir a DataFrame si no lo es
                 if isinstance(class_results, dict):
@@ -667,8 +666,17 @@ def save_best_models(class_predictions, reg_predictions, class_results, reg_resu
                 else:
                     class_df = class_results
                 
-                # Encontrar el mejor modelo por F1-Score
-                best_class_name = class_df['Test_F1'].idxmax()
+                # CAMBIO: Encontrar el mejor modelo por ACCURACY (no F1)
+                # Para reposición de inventario, accuracy es más importante
+                best_class_name = class_df['Test_Accuracy'].idxmax()  # CAMBIO CLAVE
+                
+                # Mostrar comparación para transparencia
+                print(f"   📊 Criterio de selección: Test_Accuracy")
+                print(f"   📊 Modelos candidatos:")
+                top_models = class_df.nlargest(3, 'Test_Accuracy')[['Test_Accuracy', 'Test_F1']]
+                for name, row in top_models.iterrows():
+                    symbol = "🏆" if name == best_class_name else "  "
+                    print(f"      {symbol} {name}: Accuracy={row['Test_Accuracy']:.3f}, F1={row['Test_F1']:.3f}")
         
                 if best_class_name in class_predictions:
                     best_class_model = class_predictions[best_class_name]['model']
@@ -679,30 +687,32 @@ def save_best_models(class_predictions, reg_predictions, class_results, reg_resu
                     # Guardar metadata completa
                     class_meta = {
                         'model_name': best_class_name,
-                        'f1_score': float(class_df.loc[best_class_name, 'Test_F1']),
+                        'selection_criteria': 'Best Test_Accuracy (optimal for inventory management)',
                         'accuracy': float(class_df.loc[best_class_name, 'Test_Accuracy']),
+                        'f1_score': float(class_df.loc[best_class_name, 'Test_F1']),
                         'precision': float(class_df.loc[best_class_name, 'Test_Precision']),
                         'recall': float(class_df.loc[best_class_name, 'Test_Recall']),
+                        'roc_auc': float(class_df.loc[best_class_name, 'Test_ROC_AUC']) if class_df.loc[best_class_name, 'Test_ROC_AUC'] is not None else None,
                         'created_at': datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
-                        'source': 'Best model by F1-Score from comprehensive analysis'
+                        'source': 'Best model by Test_Accuracy from comprehensive analysis'
                     }
                     
                     with open(f'{models_dir}/classification_model_meta.json', 'w') as f:
                         json.dump(class_meta, f, indent=2)
                 
                     print(f"✅ Mejor modelo clasificación guardado: {best_class_name}")
+                    print(f"   • Test_Accuracy: {class_meta['accuracy']:.4f}")
                     print(f"   • F1-Score: {class_meta['f1_score']:.4f}")
-                    print(f"   • Accuracy: {class_meta['accuracy']:.4f}")
+                    print(f"   • ROC-AUC: {class_meta['roc_auc']:.4f}" if class_meta['roc_auc'] else "   • ROC-AUC: N/A")
                         
         except Exception as e:
             print(f"⚠️ Error al guardar modelo de clasificación: {e}")
     
-    # Mejor modelo de regresión
+    # Mejor modelo de regresión - MANTENER IGUAL (está correcto)
     if reg_predictions:
         try:
             from joblib import dump
             
-            # Método 1: Usar los resultados guardados si están disponibles
             if reg_results is not None:
                 # Convertir a DataFrame si no lo es
                 if isinstance(reg_results, dict):
@@ -716,6 +726,14 @@ def save_best_models(class_predictions, reg_predictions, class_results, reg_resu
                 if not log_models.empty:
                     # Encontrar el mejor modelo por R²
                     best_reg_name = log_models['Test_R2'].idxmax()
+                    
+                    # Mostrar comparación para transparencia
+                    print(f"\n   📊 Criterio de selección: Test_R2 (solo modelos con transformación Log)")
+                    print(f"   📊 Modelos candidatos:")
+                    top_reg_models = log_models.nlargest(3, 'Test_R2')[['Test_R2', 'Test_MAE']]
+                    for name, row in top_reg_models.iterrows():
+                        symbol = "🏆" if name == best_reg_name else "  "
+                        print(f"      {symbol} {name}: R²={row['Test_R2']:.3f}, MAE={row['Test_MAE']:.2f}")
             
                     if best_reg_name in reg_predictions:
                         best_reg_model = reg_predictions[best_reg_name]['model']
@@ -726,6 +744,7 @@ def save_best_models(class_predictions, reg_predictions, class_results, reg_resu
                         # Guardar metadata completa
                         reg_meta = {
                             'model_name': best_reg_name,
+                            'selection_criteria': 'Best Test_R2 from log-transformed models',
                             'r2_score': float(log_models.loc[best_reg_name, 'Test_R2']),
                             'mae_score': float(log_models.loc[best_reg_name, 'Test_MAE']),
                             'rmse_score': float(log_models.loc[best_reg_name, 'Test_RMSE']),
@@ -743,6 +762,12 @@ def save_best_models(class_predictions, reg_predictions, class_results, reg_resu
             
         except Exception as e:
             print(f"⚠️ Error al guardar modelo de regresión: {e}")
+
+    # NUEVO: Resumen final de selección
+    print(f"\n🎯 RESUMEN DE MODELOS SELECCIONADOS:")
+    print(f"   • Clasificación: {best_class_name if 'best_class_name' in locals() else 'No seleccionado'}")
+    print(f"   • Regresión: {best_reg_name if 'best_reg_name' in locals() else 'No seleccionado'}")
+    print(f"   • Criterio: Accuracy para clasificación, R² para regresión (Log)")
 
 def main():
    print("🚀 INICIANDO COMPARACIÓN DE ALGORITMOS ML")
