@@ -1,0 +1,384 @@
+{
+  "product_stats": {
+    "total_products_analyzed": 102,
+    "avg_accuracy": 0.7969607843137254,
+    "std_accuracy": 0.1710311720512964,
+    "best_product_accuracy": 1.0,
+    "worst_product_accuracy": 0.333
+  },
+  "store_stats": {
+    "total_stores_analyzed": 188,
+    "avg_accuracy": 0.7774893617021277,
+    "std_accuracy": 0.30637456522657397,
+    "best_store_accuracy": 1.0,
+    "worst_store_accuracy": 0.0
+  },
+  "top_products": {
+    "121": {
+      "accuracy": 1.0,
+      "count": 12,
+      "real_restock_rate": 0.0,
+      "pred_restock_rate": 0.0,
+      "avg_quantity_error": 0.0,
+      "total_real_quantity": 0.0,
+      "total_pred_quantity": 0.0
+    },
+    "122": {
+      "accuracy": 1.0,
+      "count": 15,
+      "real_restock_rate": 0.067,
+      "pred_restock_rate": 0.067,
+      "avg_quantity_error": 106.669,
+      "total_real_quantity": 2560.0,
+      "total_pred_quantity": 959.96
+    },
+    "123": {
+      "accuracy": 1.0,
+      "count": 5,
+      "real_restock_rate": 0.8,
+      "pred_restock_rate": 0.8,
+      "avg_quantity_error": 68.666,
+      "total_real_quantity": 540.0,
+      "total_pred_quantity": 520.486
+    },
+    "173": {
+      "accuracy": 1.0,
+      "count": 7,
+      "real_restock_rate": 0.143,
+      "pred_restock_rate": 0.143,
+      "avg_quantity_error": 5.04,
+      "total_real_quantity": 80.0,
+      "total_pred_quantity": 44.717
+    },
+    "182": {
+      "accuracy": 1.0,
+      "count": 13,
+      "real_restock_rate": 0.077,
+      "pred_restock_rate": 0.077,
+      "avg_quantity_error": 2.643,
+      "total_real_quantity": 8.0,
+      "total_pred_quantity": 42.364
+    },
+    "188": {
+      "accuracy": 1.0,
+      "count": 3,
+      "real_restock_rate": 0.333,
+      "pred_restock_rate": 0.333,
+      "avg_quantity_error": 73.032,
+      "total_real_quantity": 320.0,
+      "total_pred_quantity": 100.905
+    },
+    "192": {
+      "accuracy": 1.0,
+      "count": 7,
+      "real_restock_rate": 0.0,
+      "pred_restock_rate": 0.0,
+      "avg_quantity_error": 0.0,
+      "total_real_quantity": 0.0,
+      "total_pred_quantity": 0.0
+    },
+    "201": {
+      "accuracy": 1.0,
+      "count": 4,
+      "real_restock_rate": 0.0,
+      "pred_restock_rate": 0.0,
+      "avg_quantity_error": 0.0,
+      "total_real_quantity": 0.0,
+      "total_pred_quantity": 0.0
+    },
+    "204": {
+      "accuracy": 1.0,
+      "count": 4,
+      "real_restock_rate": 0.0,
+      "pred_restock_rate": 0.0,
+      "avg_quantity_error": 0.0,
+      "total_real_quantity": 0.0,
+      "total_pred_quantity": 0.0
+    },
+    "209": {
+      "accuracy": 1.0,
+      "count": 5,
+      "real_restock_rate": 0.0,
+      "pred_restock_rate": 0.0,
+      "avg_quantity_error": 0.0,
+      "total_real_quantity": 0.0,
+      "total_pred_quantity": 0.0
+    }
+  },
+  "bottom_products": {
+    "177": {
+      "accuracy": 0.333,
+      "count": 6,
+      "real_restock_rate": 0.0,
+      "pred_restock_rate": 0.667,
+      "avg_quantity_error": 25.049,
+      "total_real_quantity": 0.0,
+      "total_pred_quantity": 150.297
+    },
+    "241": {
+      "accuracy": 0.357,
+      "count": 14,
+      "real_restock_rate": 0.286,
+      "pred_restock_rate": 0.929,
+      "avg_quantity_error": 2032.452,
+      "total_real_quantity": 6400.0,
+      "total_pred_quantity": 34854.328
+    },
+    "237": {
+      "accuracy": 0.385,
+      "count": 13,
+      "real_restock_rate": 0.154,
+      "pred_restock_rate": 0.615,
+      "avg_quantity_error": 392.497,
+      "total_real_quantity": 2520.0,
+      "total_pred_quantity": 5315.988
+    },
+    "124": {
+      "accuracy": 0.5,
+      "count": 20,
+      "real_restock_rate": 0.4,
+      "pred_restock_rate": 0.9,
+      "avg_quantity_error": 132.623,
+      "total_real_quantity": 2190.0,
+      "total_pred_quantity": 3431.522
+    },
+    "133": {
+      "accuracy": 0.5,
+      "count": 20,
+      "real_restock_rate": 0.55,
+      "pred_restock_rate": 0.95,
+      "avg_quantity_error": 169.98,
+      "total_real_quantity": 2112.0,
+      "total_pred_quantity": 3912.803
+    },
+    "168": {
+      "accuracy": 0.5,
+      "count": 6,
+      "real_restock_rate": 0.5,
+      "pred_restock_rate": 1.0,
+      "avg_quantity_error": 255.853,
+      "total_real_quantity": 1600.0,
+      "total_pred_quantity": 1256.787
+    },
+    "180": {
+      "accuracy": 0.5,
+      "count": 8,
+      "real_restock_rate": 0.375,
+      "pred_restock_rate": 0.625,
+      "avg_quantity_error": 15.012,
+      "total_real_quantity": 24.0,
+      "total_pred_quantity": 128.098
+    },
+    "238": {
+      "accuracy": 0.5,
+      "count": 14,
+      "real_restock_rate": 0.429,
+      "pred_restock_rate": 0.929,
+      "avg_quantity_error": 253.045,
+      "total_real_quantity": 2100.0,
+      "total_pred_quantity": 3655.094
+    },
+    "239": {
+      "accuracy": 0.5,
+      "count": 12,
+      "real_restock_rate": 0.25,
+      "pred_restock_rate": 0.75,
+      "avg_quantity_error": 2533.357,
+      "total_real_quantity": 14000.0,
+      "total_pred_quantity": 43177.219
+    },
+    "172": {
+      "accuracy": 0.571,
+      "count": 7,
+      "real_restock_rate": 0.429,
+      "pred_restock_rate": 0.286,
+      "avg_quantity_error": 35.314,
+      "total_real_quantity": 200.0,
+      "total_pred_quantity": 127.195
+    }
+  },
+  "top_stores": {
+    "61": {
+      "accuracy": 1.0,
+      "count": 2,
+      "real_restock_rate": 1.0,
+      "pred_restock_rate": 1.0,
+      "avg_quantity_error": 117.737,
+      "total_real_quantity": 736.0,
+      "total_pred_quantity": 971.474
+    },
+    "93": {
+      "accuracy": 1.0,
+      "count": 3,
+      "real_restock_rate": 0.0,
+      "pred_restock_rate": 0.0,
+      "avg_quantity_error": 0.0,
+      "total_real_quantity": 0.0,
+      "total_pred_quantity": 0.0
+    },
+    "250": {
+      "accuracy": 1.0,
+      "count": 2,
+      "real_restock_rate": 0.0,
+      "pred_restock_rate": 0.0,
+      "avg_quantity_error": 0.0,
+      "total_real_quantity": 0.0,
+      "total_pred_quantity": 0.0
+    },
+    "265": {
+      "accuracy": 1.0,
+      "count": 2,
+      "real_restock_rate": 0.0,
+      "pred_restock_rate": 0.0,
+      "avg_quantity_error": 0.0,
+      "total_real_quantity": 0.0,
+      "total_pred_quantity": 0.0
+    },
+    "293": {
+      "accuracy": 1.0,
+      "count": 3,
+      "real_restock_rate": 0.667,
+      "pred_restock_rate": 0.667,
+      "avg_quantity_error": 575.758,
+      "total_real_quantity": 2620.0,
+      "total_pred_quantity": 1147.194
+    },
+    "379": {
+      "accuracy": 1.0,
+      "count": 2,
+      "real_restock_rate": 0.0,
+      "pred_restock_rate": 0.0,
+      "avg_quantity_error": 0.0,
+      "total_real_quantity": 0.0,
+      "total_pred_quantity": 0.0
+    },
+    "387": {
+      "accuracy": 1.0,
+      "count": 2,
+      "real_restock_rate": 0.0,
+      "pred_restock_rate": 0.0,
+      "avg_quantity_error": 0.0,
+      "total_real_quantity": 0.0,
+      "total_pred_quantity": 0.0
+    },
+    "528": {
+      "accuracy": 1.0,
+      "count": 2,
+      "real_restock_rate": 0.0,
+      "pred_restock_rate": 0.0,
+      "avg_quantity_error": 0.0,
+      "total_real_quantity": 0.0,
+      "total_pred_quantity": 0.0
+    },
+    "853": {
+      "accuracy": 1.0,
+      "count": 2,
+      "real_restock_rate": 0.0,
+      "pred_restock_rate": 0.0,
+      "avg_quantity_error": 0.0,
+      "total_real_quantity": 0.0,
+      "total_pred_quantity": 0.0
+    },
+    "920": {
+      "accuracy": 1.0,
+      "count": 2,
+      "real_restock_rate": 0.0,
+      "pred_restock_rate": 0.0,
+      "avg_quantity_error": 0.0,
+      "total_real_quantity": 0.0,
+      "total_pred_quantity": 0.0
+    }
+  },
+  "bottom_stores": {
+    "1644": {
+      "accuracy": 0.0,
+      "count": 3,
+      "real_restock_rate": 0.0,
+      "pred_restock_rate": 1.0,
+      "avg_quantity_error": 107.353,
+      "total_real_quantity": 0.0,
+      "total_pred_quantity": 322.06
+    },
+    "2411": {
+      "accuracy": 0.0,
+      "count": 2,
+      "real_restock_rate": 1.0,
+      "pred_restock_rate": 0.0,
+      "avg_quantity_error": 1210.0,
+      "total_real_quantity": 2420.0,
+      "total_pred_quantity": 0.0
+    },
+    "2529": {
+      "accuracy": 0.0,
+      "count": 2,
+      "real_restock_rate": 0.0,
+      "pred_restock_rate": 1.0,
+      "avg_quantity_error": 358.33,
+      "total_real_quantity": 0.0,
+      "total_pred_quantity": 716.66
+    },
+    "2840": {
+      "accuracy": 0.0,
+      "count": 2,
+      "real_restock_rate": 0.0,
+      "pred_restock_rate": 1.0,
+      "avg_quantity_error": 433.479,
+      "total_real_quantity": 0.0,
+      "total_pred_quantity": 866.958
+    },
+    "3195": {
+      "accuracy": 0.0,
+      "count": 2,
+      "real_restock_rate": 0.0,
+      "pred_restock_rate": 1.0,
+      "avg_quantity_error": 1294.702,
+      "total_real_quantity": 0.0,
+      "total_pred_quantity": 2589.403
+    },
+    "3402": {
+      "accuracy": 0.0,
+      "count": 2,
+      "real_restock_rate": 1.0,
+      "pred_restock_rate": 0.0,
+      "avg_quantity_error": 1920.0,
+      "total_real_quantity": 3840.0,
+      "total_pred_quantity": 0.0
+    },
+    "6570": {
+      "accuracy": 0.0,
+      "count": 2,
+      "real_restock_rate": 0.0,
+      "pred_restock_rate": 1.0,
+      "avg_quantity_error": 262.728,
+      "total_real_quantity": 0.0,
+      "total_pred_quantity": 525.455
+    },
+    "7270": {
+      "accuracy": 0.0,
+      "count": 2,
+      "real_restock_rate": 0.5,
+      "pred_restock_rate": 0.5,
+      "avg_quantity_error": 3046.04,
+      "total_real_quantity": 1120.0,
+      "total_pred_quantity": 4972.079
+    },
+    "12496": {
+      "accuracy": 0.0,
+      "count": 2,
+      "real_restock_rate": 0.5,
+      "pred_restock_rate": 0.5,
+      "avg_quantity_error": 1028.795,
+      "total_real_quantity": 152.0,
+      "total_pred_quantity": 1905.59
+    },
+    "13857": {
+      "accuracy": 0.0,
+      "count": 2,
+      "real_restock_rate": 0.5,
+      "pred_restock_rate": 0.5,
+      "avg_quantity_error": 34.302,
+      "total_real_quantity": 40.0,
+      "total_pred_quantity": 28.605
+    }
+  }
+}

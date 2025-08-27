@@ -153,7 +153,7 @@ def _predict_from_historical_data(features):
                     capacidad_maxima = float(features.get('capacidadMaxima', 100))
                     
                     # Usar un ratio conservador para casos similares
-                    ratio = 0.6  # Reponer al 60% de capacidad para casos similares
+                    ratio = 0.7  # Reponer al 70% de capacidad para casos similares
                     objetivo_stock = capacidad_maxima * ratio
                     cantidad_a_reponer = max(0, int(objetivo_stock - stock_recuentos))
                 else:

@@ -1,0 +1,38 @@
+{
+  "classification_metrics": {
+    "accuracy": 0.7886108714408974,
+    "precision": 0.5219638242894057,
+    "recall": 0.7709923664122137,
+    "f1_score": 0.6224961479198767
+  },
+  "inventory_metrics": {
+    "service_level": 0.9482312338222606,
+    "stock_out_rate": 0.05176876617773943,
+    "overstock_rate": 0.15962036238136323,
+    "inventory_efficiency": 1.5693334913409516,
+    "decision_accuracy": 0.7886108714408974,
+    "restock_efficiency": 0.5219638242894057,
+    "restock_coverage": 0.7709923664122137
+  },
+  "operational_impact": {
+    "correct_restock_decisions": 202,
+    "correct_no_restock_decisions": 712,
+    "missed_restock_opportunities": 60,
+    "unnecessary_restock_decisions": 185,
+    "total_correct_decisions": 914,
+    "units_excess_inventory": 150587.69091605864,
+    "units_missed_restock": 153338.0
+  },
+  "prediction_accuracy": {
+    "mae_quantity_true_positives": 1041.5421088597234,
+    "total_required_units": 455949.0,
+    "total_predicted_units": 290536.7167117579,
+    "prediction_efficiency": 1.5693334913409516
+  },
+  "confusion_matrix": {
+    "true_positives": 202,
+    "false_positives": 185,
+    "false_negatives": 60,
+    "true_negatives": 712
+  }
+}
